@@ -1,0 +1,24 @@
+class InsertionSortRecursive
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		int[] arr = new int[]{10,5,3,6,6,4,-2,2,5,1};
+		Recursive(arr, 1, 0);
+		System.out.print(Arrays.toString(arr));
+	}
+	
+	public static void Recursive(int[] arr, int start, int j){
+		if(j == start){
+			return;
+		}
+		for(int i=start;i<arr.length;i++){
+			if(arr[j] > arr[i]){
+				int temp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = temp;
+			}
+			Recursive(arr, i, j+1);
+			j=0;
+		}
+	}
+}

@@ -1,0 +1,23 @@
+class BubbleSortRecursive
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		int[] arr = new int[]{10,5,3,6,6,4,-2,2,5,1};
+		Recursive(arr, 0);
+		System.out.print(Arrays.toString(arr));
+	}
+	
+	public static void Recursive(int[] arr, int j){
+		if(j+1 == arr.length){
+			return;
+		}
+		for(int i=j;i<arr.length-1;i++){
+			if(arr[j] > arr[j+1]){
+				int temp = arr[j+1];
+				arr[j+1] = arr[j];
+				arr[j] = temp;
+			}
+			Recursive(arr, j+1);
+		}
+	}
+}

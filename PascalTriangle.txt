@@ -1,0 +1,19 @@
+public class PascalTringle {
+    public ArrayList<ArrayList<Integer>> solve(int A) {
+        ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
+        for(int i=0;i<A;i++){
+            ArrayList<Integer> l = new ArrayList<Integer>();
+            for(int j=0;j<i+1;j++){
+                if(j==0 | j==i){
+                    l.add(1);
+                } else{
+                    ArrayList<Integer> temp = list.get(i-1);
+                    int sum = temp.get(j)+temp.get(j-1);
+                    l.add(sum);
+                }
+            }
+            list.add(l);
+        }
+        return list;
+    }
+}
