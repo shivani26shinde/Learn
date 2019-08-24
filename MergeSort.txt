@@ -1,0 +1,57 @@
+class MergeSort
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		int[] arr = new int[]{10,5,3,6,-2,-1,0,9,8,6,4,-2,2,5,1};
+		Sort(arr, 0, arr.length-1);
+		System.out.print(Arrays.toString(arr));
+	}
+	
+	public static void Sort(int[] arr, int l, int r){
+		if(r>l){
+			int m = (l+r)/2;
+			Sort(arr, l, m);
+			Sort(arr, m+1, r);
+			Merge(arr, l, m, r);
+		}
+		return;
+	}
+	
+	public static void Merge(int[] arr, int l, int m, int r){
+		int arr1[] = new int[m-l+1];
+		int arr2[] = new int[r-m];
+		int start1 = l;
+		int start2 = m+1;
+		for(int i=0;i<arr1.length;i++){
+			arr1[i] = arr[start1];
+			start1++;
+		}
+		for(int i=0;i<arr2.length;i++){
+			arr2[i] = arr[start2];
+			start2++;
+		}
+		start1 = 0;
+		start2 = 0;
+		while(start1<arr1.length && start2<arr2.length){
+			if(arr1[start1] <= arr2[start2]){
+				arr[l] = arr1[start1];
+				start1++;
+			} else{
+				arr[l] = arr2[start2];
+				start2++;
+			}
+			l++;
+		}
+		while(start1<arr1.length){
+			arr[l] = arr1[start1];
+			start1++; 
+			l++;
+		}
+		while(start2<arr2.length){
+			arr[l] = arr2[start2];
+			start2++;
+			l++;
+		}
+		return;
+	}
+}
