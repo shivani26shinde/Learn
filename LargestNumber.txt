@@ -1,0 +1,22 @@
+public class LargestNumber {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public String largestNumber(final List<Integer> A) {
+        StringBuilder strng = new StringBuilder();
+        String[] arr = new String[A.size()];
+        for(int i=0;i<A.size();i++){
+            arr[i] = Integer.toString(A.get(i));
+        }
+        Arrays.sort(arr, new Comparator<String>(){
+            public int compare(String s1,String s2){
+                System.ou
+               return (s2+s1).compareTo(s1+s2);
+            }});
+        for(int i=0;i<arr.length;i++){
+            strng.append(arr[i]);
+        }
+        if(strng.charAt(0) == '0'){
+            return "0";
+        }
+        return strng.toString();
+    }
+}
