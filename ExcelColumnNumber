@@ -1,0 +1,21 @@
+public class Solution {
+    public int titleToNumber(String A) {
+        int sum = 0;
+        int i=A.length()-1;
+        int start = 0;
+        Map<Character, Integer> map = new HashMap<Character, Integer>();
+        char c = 'A';
+        for(int j=1;j<=26;j++){
+            map.put(c, j);
+            c++;
+        }
+        while(i>=0){
+            char chr = A.charAt(i);
+            int val = map.get(chr);
+            sum = sum + (int)(Math.pow(26,start) * val);
+            i--;
+            start++;
+        }
+        return sum;
+    }
+}
