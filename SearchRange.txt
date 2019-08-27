@@ -1,0 +1,72 @@
+// Optimal Solution
+public class Solution {
+    // DO NOT MODIFY THE LIST
+    public ArrayList<Integer> searchRange(final List<Integer> a, int b) {
+        int start = 0;
+        int end = a.size()-1;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        int p1 = Search(a,start,end,b,false);
+        int p2 = Search(a,start,end,b,true);
+        list.add(p1);list.add(p2);
+        return list;
+    }
+    public int Search(final List<Integer> a, int start, int end, int b, boolean high){
+        int ans = -1;
+        while(start<=end){
+            int mid = (start+end)/2;
+            int num = a.get(mid);
+            if(num == b){
+                ans = mid;
+                if(high){
+                    start = mid+1;
+                } else{
+                    end = mid-1;
+                }
+            }else if(num < b){
+                start = mid+1;
+            } else{
+                end = mid-1;
+            }
+        }
+        return ans;
+    }
+}
+
+// Poor solution
+public class Solution {
+    // DO NOT MODIFY THE LIST
+    public ArrayList<Integer> searchRange(final List<Integer> a, int b) {
+        int start = 0;
+        int end = a.size()-1;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        int p1 = -1;
+        int p2 = -1;
+        while(start<=end){
+            int mid = (start+end)/2;
+            int num = a.get(mid);
+            if(num == b){
+                p1 = mid;
+                p2 = mid;
+                break;
+            }
+            if(num < b){
+                start = mid+1;
+            } else{
+                end = mid-1;
+            }
+        }
+        if(p1 != -1 && p2 != -1){
+            while(p1-1 >= 0 && a.get(p1-1) == b){
+                p1--;
+            }
+            while(p2+1 < a.size() && a.get(p2+1) == b){
+                p2++;
+            }
+            list.add(p1);
+            list.add(p2);
+            return list;
+        }
+        list.add(-1);list.add(-1);
+        return list;
+    }
+}
