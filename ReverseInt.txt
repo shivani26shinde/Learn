@@ -1,0 +1,17 @@
+public class Solution {
+    public int reverse(int A) {
+        int sign = A<0 ? 1 : 0;
+        A = A<0 ? -A : A;
+        long num = 0;
+        while(A>0){
+            long n = A%10;
+            num = num*10 + n;
+            A = A/10;
+        }
+        if(num > Integer.MAX_VALUE){
+            return 0;
+        }
+        int val = (int) num;
+        return sign == 1 ? -val : val; 
+    }
+}
