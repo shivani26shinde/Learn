@@ -1,0 +1,25 @@
+public class Solution {
+    public int firstMissingPositive(ArrayList<Integer> A) {
+        int i=0;
+        while(i<A.size()){
+            int num = A.get(i);
+            if(num > 0 && num < A.size() && num-1 != i){
+                int temp = A.get(num-1);
+                if(temp != num){
+                    A.set(num-1,num);
+                    A.set(i, temp);
+                }else{
+                    i++;
+                }
+            }else{
+                i++;
+            }
+        }
+        for(int j=0;j<A.size();j++){
+            if(j+1 != A.get(j)){
+                return j+1;
+            }
+        }
+        return A.size()+1;
+    }
+}
