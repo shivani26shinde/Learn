@@ -1,0 +1,19 @@
+public class Solution {
+    public int searchInsert(ArrayList<Integer> a, int b) {
+        int s = 0;
+        int e = a.size()-1;
+        while(s<=e){
+            int m = (s+e)/2;
+            int val = a.get(m);
+            if(b == val){
+                return m;
+            }
+            if(b<val){
+                e = m-1;
+            } else{
+                s = m+1;
+            }
+        }
+        return s;
+    }
+}
