@@ -1,0 +1,25 @@
+public class Solution {
+    // DO NOT MODIFY THE LIST
+    public int search(final List<Integer> a, int b) {
+        int s=0,e=a.size()-1;
+        while(s<=e){
+            int m=(s+e)/2;
+            if(a.get(m) == b) return m;
+            if(a.get(s) < a.get(m)){
+                if(a.get(m) > b && a.get(s) <= b){
+                    e = m-1;
+                }else{
+                    s = m+1;
+                }
+                
+            } else{
+                if(a.get(m) < b && a.get(e) >= b){
+                    s = m+1;
+                } else{
+                    e = m-1;
+                }
+            }
+        }
+        return -1;
+    }
+}
