@@ -1,0 +1,27 @@
+public class Solution {
+    ArrayList<ArrayList<Integer>> fList = new ArrayList<ArrayList<Integer>>();
+    public ArrayList<ArrayList<Integer>> permute(ArrayList<Integer> A) {
+        Permutation(0, A);
+        return fList;
+    }
+    public void Permutation(int s, ArrayList<Integer> A){
+        if(s==A.size()-1){
+            ArrayList<Integer> list = new ArrayList<>();
+            for(int i=0;i<A.size();i++){
+                list.add(A.get(i));
+            }
+            fList.add(list);
+            return;
+        }
+        for(int i=s;i<A.size();i++){
+            Swap(s, i, A);
+            Permutation(s+1, A);
+            Swap(i, s, A);
+        }
+    }
+    public void Swap(int i, int j, ArrayList<Integer> A){
+        int temp = A.get(i);
+        A.set(i, A.get(j));
+        A.set(j, temp);
+    }
+}
