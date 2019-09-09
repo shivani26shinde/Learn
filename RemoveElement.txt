@@ -1,0 +1,23 @@
+public class Solution {
+    public int removeElement(ArrayList<Integer> a, int b) {
+        int s=0,e=0,elm=-1;
+        while(s<a.size() && e<a.size()){
+            if(a.get(s) == b){
+                while(e<a.size() && a.get(e) == b){
+                    e++;
+                }
+                if(e<a.size()){
+                    int t = a.get(s);
+                    a.set(s, a.get(e));
+                    a.set(e, t);
+                    elm = s;
+                }
+            } else{
+                elm++;
+            }
+            s++;
+            e++;
+        }
+        return elm+1;
+    }
+}
