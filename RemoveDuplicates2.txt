@@ -1,0 +1,22 @@
+public class Solution {
+    public int removeDuplicates(ArrayList<Integer> a) {
+        if(a.size() < 3){
+            return a.size();
+        }
+        int i=2,j=2;
+        while(i<a.size() && j<a.size()){
+            if(a.get(i) <= a.get(i-1) || a.get(i) <= a.get(i-2)){
+                while(j<a.size() && (a.get(j) <= a.get(i-1) && a.get(j) <= a.get(i-2))){
+                    j++;
+                }
+                if(j==a.size()){
+                    return i;
+                } else{
+                    a.set(i, a.get(j));
+                }
+            }
+            i++;j++;
+        }
+        return i;
+    }
+}
