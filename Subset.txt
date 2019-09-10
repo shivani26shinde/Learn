@@ -1,0 +1,21 @@
+public class Solution {
+    ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
+    HashSet<ArrayList<Integer>> set = new HashSet<ArrayList<Integer>>();
+    public ArrayList<ArrayList<Integer>> subsets(ArrayList<Integer> A) {
+        Collections.sort(A);
+        Recur(A, 0, new ArrayList<Integer>());
+        return list;
+    }
+    public void Recur(ArrayList<Integer> A, int ind, ArrayList<Integer> temp){
+        if(ind == A.size()){
+            list.add(new ArrayList<Integer>(temp));
+            return;
+        }
+        list.add(new ArrayList<Integer>(temp));
+        for(int i=ind;i<A.size();i++){
+            temp.add(A.get(i));
+            Recur(A, i+1, temp);
+            temp.remove(temp.size()-1);
+        }
+    }
+}
