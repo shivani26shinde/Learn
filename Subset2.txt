@@ -1,0 +1,29 @@
+public class Solution {
+    ArrayList<ArrayList<Integer>> fList = new ArrayList<ArrayList<Integer>>();
+    Set<ArrayList<Integer>> set = new HashSet<ArrayList<Integer>>(); 
+    
+    public ArrayList<ArrayList<Integer>> subsetsWithDup(ArrayList<Integer> A) {
+        Collections.sort(A);
+        SubSet(0, A, new ArrayList<Integer>());
+        return fList;
+    }
+    public void SubSet(int in, ArrayList<Integer> A, ArrayList<Integer> temp){
+        if(in == A.size()){
+            if(!set.contains(temp)){
+                ArrayList<Integer> l = new ArrayList<Integer>(temp);
+                fList.add(l);
+                set.add(l);
+            }
+        }
+        if(!set.contains(temp)){
+            ArrayList<Integer> l = new ArrayList<Integer>(temp);
+            fList.add(l);
+            set.add(l);
+        }
+        for(int i=in;i<A.size();i++){
+            temp.add(A.get(i));
+            SubSet(i+1, A, temp);
+            temp.remove(temp.size()-1);
+        }
+    }
+}
