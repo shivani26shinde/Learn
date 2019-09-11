@@ -1,0 +1,14 @@
+public class Solution {	
+	HashSet<String> set = new HashSet<String>();
+	ArrayList<String> finalL = new ArrayList<String>();
+	for(int i=0;i<list.size();i++){
+		char[] arr = list.get(i).toCharArray();
+		Arrays.sort(arr);
+		String str = new String(arr);
+		if(!set.contains(str)){
+			set.add(str);
+			finalL.add(list.get(i));
+		} 
+	}
+	Collections.sort(finalL);
+}
