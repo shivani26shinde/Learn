@@ -1,0 +1,26 @@
+public class Solution {
+    public String longestCommonPrefix(ArrayList<String> A) {
+        if(A.size() == 1){
+            return A.get(0);
+        }
+        int min = Integer.MAX_VALUE;
+        String st = "";
+        for(int i=0;i<A.size();i++){
+            if(A.get(i).length() < min){
+                min = A.get(i).length();
+                st = A.get(i);
+            }
+        }
+        for(int i=0;i<A.size();i++){
+            StringBuilder sb = new StringBuilder();
+            String s = A.get(i);
+            int st1 = 0;
+            while(st1<st.length() && s.charAt(st1) == st.charAt(st1)){
+                sb.append(s.charAt(st1));
+                st1++;
+            }
+            st = sb.toString();
+        }
+        return st;
+    }
+}
