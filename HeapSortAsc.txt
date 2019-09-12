@@ -1,0 +1,35 @@
+class Ideone
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		int[] arr = new int[]{4,3,4,5,2,6,7,4,5,8,2,1,1,5};
+		int n = arr.length;
+		for(int i=n/2-1;i>=0;i--){
+			Heapify(i, n, arr);
+		}
+		for(int i=n-1;i>=0;i--){
+			int temp = arr[i];
+			arr[i] = arr[0];
+			arr[0] = temp;
+			Heapify(0, i, arr);
+		}
+		System.out.println(Arrays.toString(arr));
+	}
+	public static void Heapify(int i, int n, int[] arr){
+		int el = i;
+		int elL = 2*i+1;
+		int elR = 2*i+2;
+		if(elL < n && arr[elL] > arr[el]){
+			el = elL;
+		}
+		if(elR < n && arr[elR] > arr[el]){
+			el = elR;
+		}
+		if(el != i){
+			int temp = arr[i];
+			arr[i] = arr[el];
+			arr[el] = temp;
+			Heapify(el, n, arr);
+		}
+	}
+}
