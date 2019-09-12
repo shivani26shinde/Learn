@@ -1,0 +1,42 @@
+public class Solution {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public ArrayList<Integer> repeatedNumber(final List<Integer> A) {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        int XOR = 1;
+        for(int i=2;i<=A.size();i++){
+            XOR = XOR ^ i;
+        }
+        for(int i=0;i<A.size();i++){
+            XOR = XOR ^ A.get(i);
+        }
+        int X = 0;
+        int Y = 0;
+        int set = XOR & ~(XOR - 1);
+        for(int i=0;i<A.size();i++){
+            if((A.get(i) & set) != 0){
+                X = X^A.get(i);
+            } else{
+                Y = Y^A.get(i);
+            }
+        }
+        for(int i=1;i<=A.size();i++){
+            if((i & set) != 0){
+                X = X^i;
+            } else{
+                Y = Y^i;
+            }
+        }
+        for(int i=0;i<A.size();i++){
+            if(A.get(i) == X){
+                list.add(X);
+                list.add(Y);
+                break;
+            } else if(A.get(i) == Y){
+                list.add(Y);
+                list.add(X);
+                break;
+            }
+        }
+        return list;
+    }
+}
