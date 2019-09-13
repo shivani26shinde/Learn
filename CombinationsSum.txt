@@ -1,0 +1,34 @@
+public class Solution {
+    ArrayList<ArrayList<Integer>> fL = new ArrayList<ArrayList<Integer>>();
+    HashSet<ArrayList<Integer>> set = new HashSet<ArrayList<Integer>>();
+    public ArrayList<ArrayList<Integer>> combinationSum(ArrayList<Integer> A, int B) {
+        Collections.sort(A);
+        Recur(0, B, A.size(), A, new ArrayList<Integer>());
+        return fL;
+    }
+    public void Recur(int in, int k, int n, ArrayList<Integer> A, ArrayList<Integer> temp){
+        if(in<n){
+            int sum = 0;
+            for(int i=0;i<temp.size();i++){
+                sum = sum+temp.get(i);
+            }
+            if(sum == k && !set.contains(temp)){
+                ArrayList<Integer> l = new ArrayList<Integer>(temp);
+                fL.add(l);
+                set.add(l);
+                return;
+            }
+            if(sum > k){
+                return;
+            }
+        }
+        if(in == n){
+            return;
+        }
+        for(int i=in;i<n;i++){
+            temp.add(A.get(i));
+            Recur(i, k, n, A, temp);
+            temp.remove(temp.size()-1);
+        }
+    }
+}
