@@ -1,0 +1,21 @@
+public class Solution {
+    ArrayList<ArrayList<Integer>> fL = new ArrayList<ArrayList<Integer>>();
+    public ArrayList<ArrayList<Integer>> combine(int A, int B) {
+        Recur(1, B, A, new ArrayList<Integer>());
+        return fL;
+    }
+    public void Recur(int in, int k, int n, ArrayList<Integer> temp){
+        if(temp.size() == k){
+            fL.add(new ArrayList<Integer>(temp));
+            return;
+        }
+        if(in > n){
+            return;
+        }
+        for(int i=in;i<=n;i++){
+            temp.add(i);
+            Recur(i+1, k, n, temp);
+            temp.remove(temp.size()-1);
+        }
+    }
+}
