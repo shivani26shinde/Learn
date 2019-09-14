@@ -1,0 +1,51 @@
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+        for(int i=0;i<wordList.size();i++){
+            String word = wordList.get(i);
+            for(int j=0;j<word.length();j++){
+                String s = word.substring(0,j)+"#"+word.substring(j+1,word.length());
+                if(!map.containsKey(s)){
+                    ArrayList<String> lN = new ArrayList<String>();
+                    lN.add(word);
+                    map.put(s, lN);
+                } else{
+                    ArrayList<String> l = map.get(s);
+                    l.add(word);
+                    map.put(s, l);
+                }
+            }
+        }
+        Queue<String[]> q = new LinkedList<String[]>();
+        HashSet<String> set = new HashSet<String>();
+        String[] arL = new String[2];
+        arL[0] = beginWord;
+        arL[1] = String.valueOf(1);
+        q.add(arL);
+        while(!q.isEmpty()){
+            arL = q.poll();
+            String word = arL[0];
+            if(!set.contains(word)){
+                set.add(word);
+                if(word.equals(endWord)){
+                    return Integer.parseInt(arL[1]);
+                }
+                for(int j=0;j<word.length();j++){
+                    String s = word.substring(0,j)+"#"+word.substring(j+1,word.length());
+                    if(map.containsKey(s)){
+                        ArrayList<String> l = map.get(s);
+                        map.remove(s);
+                        for(int i=0;i<l.size();i++){
+                            String[] arLN = new String[2];
+                            arLN[0] = l.get(i);
+                            int num = Integer.parseInt(arL[1]) + 1;
+                            arLN[1] = String.valueOf(num);
+                            q.add(arLN);
+                        }
+                    }
+                }
+            }            
+        }
+        return 0;
+    }
+}
