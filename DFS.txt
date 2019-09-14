@@ -1,0 +1,55 @@
+/* package whatever; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Ideone
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		Graph g = new Graph(4);
+		g.addEdge(0, 1); 
+        g.addEdge(0, 2); 
+        g.addEdge(1, 2); 
+        g.addEdge(2, 0); 
+        g.addEdge(2, 3); 
+        g.addEdge(3, 3);
+        DFS(2, g.adj);
+	}
+	
+	public static void DFS(int s, LinkedList<Integer>[] adj){
+		Stack<Integer> st = new Stack<Integer>();
+		int[] v = new int[4];
+		st.push(s);
+		v[s] = 1;
+		while(!st.isEmpty()){
+			int num = st.pop();
+			System.out.print(num+"  ");
+			LinkedList<Integer> l = adj[num];
+			for(int i=l.size()-1;i>=0;i--){
+				if(v[l.get(i)] != 1){
+					st.push(l.get(i));
+					v[l.get(i)] = 1;
+				}
+			}
+		}
+	}
+}
+class Graph{
+	int v;
+	LinkedList<Integer>[] adj;
+	
+	public Graph(int v){
+		this.v = v;
+		adj = new LinkedList[this.v];
+		for(int i=0;i<this.v;i++){
+			adj[i] = new LinkedList<Integer>(); 
+		}
+	}
+	
+	void addEdge(int v, int n){
+		this.adj[v].add(n);
+	}
+}
