@@ -1,0 +1,22 @@
+class Ideone
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		int[] arr = new int[]{1,10,25,35,50,10,60};
+		int d = 90;
+		int sum = d-30;
+		int num1 = -1; int num2 = -1;
+		HashSet<Integer> set = new HashSet<Integer>();
+		for(int i=0;i<arr.length;i++){
+			if(set.contains(arr[i])){
+				if(arr[i] > Math.max(num1, num2) || (sum-arr[i]) > Math.max(num1, num2)){
+					num1 = sum-arr[i];
+					num2 = arr[i];
+				}
+			} else{
+				set.add(sum-arr[i]);
+			}
+		}
+		System.out.println(num1+"  "+num2);
+	}
+}
