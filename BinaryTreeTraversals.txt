@@ -1,0 +1,64 @@
+/* package whatever; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Ideone
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		BT tree = new BT();
+		tree.root = new Node(1); 
+        tree.root.left = new Node(2); 
+        tree.root.right = new Node(3); 
+        tree.root.left.left = new Node(4); 
+        tree.root.left.right = new Node(5); 
+        PreOrder(tree.root);
+        System.out.println();
+        InOrder(tree.root);
+        System.out.println();
+        PostOrder(tree.root);
+	}
+	
+	public static void PreOrder(Node root){
+		if(root != null){
+			System.out.print(root.val+" ");
+			PreOrder(root.left);
+			PreOrder(root.right);
+		}
+	}
+	public static void InOrder(Node root){
+		if(root != null){
+			InOrder(root.left);
+			System.out.print(root.val+" ");
+			InOrder(root.right);
+		}
+	}
+	public static void PostOrder(Node root){
+		if(root != null){
+			PostOrder(root.left);
+			PostOrder(root.right);
+			System.out.print(root.val+" ");
+		}
+	}
+}
+
+class BT{
+	Node root;
+	
+	public BT(){
+		root = null;
+	}
+}
+class Node{
+	int val;
+	Node right;
+	Node left;
+	public Node(int val){
+		this.val = val;
+		this.right = null;
+		this.left = null;
+	}
+}

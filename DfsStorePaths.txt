@@ -1,0 +1,54 @@
+// DFS - Store paths
+class Ideone
+{
+	static int[] v = new int[4];
+	static ArrayList<ArrayList<Integer>> fL = new ArrayList<ArrayList<Integer>>();
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		Graph g = new Graph(4);
+		g.addEdge(0, 1); 
+        g.addEdge(0, 2); 
+        g.addEdge(1, 2); 
+        g.addEdge(2, 0); 
+        g.addEdge(2, 3); 
+        g.addEdge(3, 3);
+        ArrayList<Integer> l = new ArrayList<Integer>();
+        l.add(2);
+        DFS(2, 1, g.adj, l);
+        for(int i=0;i<fL.size();i++){
+        	System.out.println(Arrays.toString(fL.get(i).toArray()));
+        }
+	}
+	
+	public static void DFS(int s, int d, LinkedList<Integer>[] adj, ArrayList<Integer> temp){
+		if(s == d){
+			fL.add(new ArrayList<Integer>(temp));
+			return;
+		}
+		v[s] = 1;
+		LinkedList<Integer> l = adj[s];
+		for(int i=0;i<l.size();i++){
+			if(v[l.get(i)] != 1){
+				temp.add(l.get(i));
+				DFS(l.get(i), d, adj, temp);
+				temp.remove(temp.size()-1);
+			}
+		}
+	}
+}
+class Graph{
+	int v;
+	LinkedList<Integer>[] adj;
+	
+	public Graph(int v){
+		this.v = v;
+		adj = new LinkedList[this.v];
+		for(int i=0;i<this.v;i++){
+			adj[i] = new LinkedList<Integer>(); 
+		}
+	}
+	
+	void addEdge(int v, int n){
+		this.adj[v].add(n);
+	}
+}
