@@ -1,0 +1,48 @@
+class Ideone
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		int[] arr1 = {20,30,20,40,60,50};
+		Integer[] arr2 = new Integer[] {40,20,60,40,30,40,50};
+		int d = 100;
+		Arrays.sort(arr1);
+		Arrays.sort(arr2, Collections.reverseOrder());
+		int diff = Integer.MAX_VALUE;
+		ArrayList<int[]> l = new ArrayList<int[]>();
+		int p1=0,p2=0;
+		int[] ary = new int[2];
+		while(p1<arr1.length && p2<arr2.length){
+			if((arr1[p1] + arr2[p2]) > d){
+				if(p1>0){
+					p1--;
+				}
+				if(p2<arr2.length){
+					p2++;
+				}
+			}else{
+				int dif = d - (arr1[p1] + arr2[p2]);
+				if(dif < diff){
+					diff = dif;
+					l = new ArrayList<int[]>();
+					ary = new int[2];
+					ary[0] = p1;
+					ary[1] = p2;
+					l.add(ary);
+				} else if(dif == diff){
+					ary = new int[2];
+					ary[0] = p1;
+					ary[1] = p2;
+					l.add(ary);
+				}
+				p1++;
+				if(p1 == arr1.length){
+					p1--;
+					p2++;
+				}
+			}
+		}
+		for(int i=0;i<l.size();i++){
+			System.out.println(Arrays.toString(l.get(i)));
+		}
+	}
+}
