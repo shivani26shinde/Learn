@@ -1,0 +1,56 @@
+/* package whatever; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Ideone
+{
+	static int g[][] = {
+			{0, 1, 0, 1, 0}, 
+            {1, 0, 1, 1, 1}, 
+            {0, 1, 0, 0, 1}, 
+            {1, 1, 0, 0, 1}, 
+            {0, 1, 1, 1, 0}
+        }; 
+	static int[] p = new int[5];
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		for(int i=0;i<p.length;i++){
+			p[i] = -1;
+		}
+		p[0] = 0;
+		System.out.println(HamiltonCycle(1));
+	}
+	public static boolean HamiltonCycle(int pos){
+		if(pos == p.length){
+			if(g[p[pos-1]][0] == 1){
+				System.out.println("Cycle!!!");
+				System.out.println(Arrays.toString(p));
+				return true;
+			}
+			return false;
+		}
+		for(int i=0;i<p.length;i++){
+			if(isSafe(i, pos)){
+				p[pos] = i;
+				if(HamiltonCycle(pos+1)) return true;
+				p[pos] = -1;
+			}
+		}
+		return false;
+		
+	}
+	public static boolean isSafe(int v, int pos){
+		if(g[p[pos-1]][v] == 0){
+			return false;
+		}
+		for(int i=0;i<pos;i++){
+			if(p[i] == v){
+				return false;
+			}
+		}
+		return true;
+	}
+}
