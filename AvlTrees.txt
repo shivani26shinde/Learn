@@ -1,0 +1,82 @@
+/**
+ * Definition for binary tree
+ * class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     ListNode(int x) { val = x; next = null; }
+ * }
+ */
+public class Solution {
+    public TreeNode sortedListToBST(ListNode a) {
+        TreeNode root = null;
+        while(a!=null){
+            root = insert(root,a.val);
+            a = a.next;
+        }
+        return root;
+    }
+    public TreeNode insert(TreeNode root, int num){
+        if(root == null){
+            return new TreeNode(num);
+        }
+        if(num <= root.val){
+            root.left = insert(root.left, num);
+        } else{
+            root.right = insert(root.right, num);
+        }
+        
+        int isBal = isBalanced(root);
+        
+        if(isBal>1 && root.left.val>num){
+            return rotateRight(root);
+        }
+        if(isBal>1 && root.left.val<num){
+            root.left = rotateLeft(root.left);
+            return rotateRight(root);
+        }
+        if(isBal<-1 && root.right.val<num){
+            return rotateLeft(root);
+        }
+        if(isBal<-1 && root.right.val>num){
+            root.right = rotateRight(root.right);
+            return rotateLeft(root);
+        }
+        return root;
+    }
+    public TreeNode rotateRight(TreeNode x){
+        TreeNode y = x.left;
+        TreeNode temp = y.right;
+        
+        y.right = x;
+        x.left = temp;
+        
+        return y;
+    }
+    public TreeNode rotateLeft(TreeNode x){
+        TreeNode y = x.right;
+        TreeNode temp = y.left;
+        
+        y.left = x;
+        x.right = temp;
+        
+        return y;
+    }
+    public int height(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+        return Math.max(height(root.left), height(root.right))+1;
+    }
+    public int isBalanced(TreeNode root){
+        return root == null ? 0 : height(root.left)-height(root.right);
+    }
+}
