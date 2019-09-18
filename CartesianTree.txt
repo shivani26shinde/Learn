@@ -19,17 +19,14 @@ public class Solution {
         return Tree(0,A.size()-1,A);
     }
     public TreeNode Tree(int s,int e, ArrayList<Integer> A){
-        if(s>e){
-            return null;
+        if(s<=e){
+            int max = getMax(A, s, e);
+            TreeNode root = new TreeNode(A.get(max));
+            root.left = Tree(s, max-1, A);
+            root.right = Tree(max+1, e, A);
+            return root;
         }
-        if(s==e){
-            return new TreeNode(A.get(s));
-        }
-        int max = getMax(A, s, e);
-        TreeNode root = new TreeNode(A.get(max));
-        root.left = Tree(l, max-1);
-        root.right = Tree(l, max-1);
-        return root;
+        return null;
     }
     public int getMax(ArrayList<Integer> A, int s, int e){
         int j=s;
