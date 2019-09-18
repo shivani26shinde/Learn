@@ -16,7 +16,7 @@ public class Solution {
         if(A.size() == 0){
             return null;
         }
-        return Tree;
+        return Tree(0,A.size()-1,A);
     }
     public TreeNode Tree(int s,int e, ArrayList<Integer> A){
         if(s>e){
