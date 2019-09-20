@@ -1,0 +1,25 @@
+public class Solution {
+    public ArrayList<Integer> prevSmaller(ArrayList<Integer> A) {
+        ArrayList<Integer> l = new ArrayList<Integer>();
+        Stack<Integer> st = new Stack<Integer>();
+        st.add(A.get(0));
+        l.add(-1);
+        for(int i=1;i<A.size();i++){
+            if(A.get(i)>st.peek()){
+                l.add(st.peek());
+                st.push(A.get(i));
+            } else{
+                while(!st.isEmpty() && st.peek() >= A.get(i)){
+                    st.pop();
+                }
+                if(st.isEmpty()){
+                    l.add(-1);
+                } else{
+                    l.add(st.peek());
+                }
+                st.push(A.get(i));
+            }
+        }
+        return l;
+    }
+}
