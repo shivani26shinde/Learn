@@ -1,0 +1,34 @@
+public class Solution {
+    public int evalRPN(ArrayList<String> A) {
+        Stack<Integer> stack = new Stack<>();
+        
+        for(String str : A){
+            if(str.equals("+") || str.equals("-") || str.equals("*") || str.equals("/")){
+                int num1 = stack.pop();
+                int num2 = stack.pop();
+                switch(str){
+                    case "+":
+                        int sum = num2+num1;
+                        stack.push(sum);
+                        break;
+                    case "-":
+                        int dif = num2-num1;
+                        stack.push(dif);
+                        break;
+                    case "*":
+                        int mul = num2*num1;
+                        stack.push(mul);
+                        break;
+                    case "/":
+                        int div = num2/num1;
+                        stack.push(div);
+                        break;
+                }
+            } else{
+                stack.push(Integer.parseInt(str));
+            }
+        }
+        
+        return stack.pop();
+    }
+}
