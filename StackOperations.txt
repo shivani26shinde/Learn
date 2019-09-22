@@ -1,0 +1,47 @@
+class Solution {
+    Stack<Long> st;
+    long min;
+    Solution(){
+        st = new Stack<Long>();
+    }
+    
+    public void push(int x) {
+        if(st.isEmpty()){
+            st.push(0L);
+            min = x;
+        } else{
+            st.push(x-min);   
+            if(x<min){
+                min = x;
+            }
+        }
+    }
+
+    public void pop() {
+        if(st.isEmpty()){
+            return;
+        }
+        long num = st.pop();
+        if(num<0){
+            long val = min;
+            min = min-num;
+        }
+    }
+
+    public int top() {
+        if(st.isEmpty()){
+            return -1;
+        }
+        if(st.peek() < 0){
+           return (int)(min);
+        }
+        return (int)(min+st.peek());
+    }
+
+    public int getMin() {
+        if(st.isEmpty()){
+            return -1;
+        }
+        return (int)min;
+    }
+}
