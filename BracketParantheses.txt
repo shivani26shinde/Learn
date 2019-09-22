@@ -1,0 +1,21 @@
+public class Solution {
+    ArrayList<String> lst = new ArrayList<String>();
+    public ArrayList<String> generateParenthesis(int A) {
+        Recur(A, A, "");
+        return lst;
+    }
+    public void Recur(int L, int R, String str){
+        if(R<L){
+            return;
+        }
+        if(L==0){
+            for(int i=0;i<R;i++){
+                str = str + ")";
+            }
+            lst.add(str);
+            return;
+        }
+        Recur(L-1,R,str+"(");
+        Recur(L,R-1,str+")");
+    }
+}
