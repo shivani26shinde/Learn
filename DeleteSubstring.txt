@@ -1,0 +1,24 @@
+class Ideone
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		String st = "abab";
+		String str = "aa";
+		int sum = Recur(st, str);
+		System.out.println(sum);
+	}
+	public static int Recur(String st, String str){
+		if(st.length() == 0){
+			return 0;
+		}
+		if(st.indexOf(str) < 0){
+			return 0;
+		}
+		int fIndx = st.indexOf(str);
+		int len1 = fIndx+str.length();
+		int lIndx = st.lastIndexOf(str);
+		int len2 = lIndx+str.length();
+		return 1 + Math.min(Recur(st.substring(0,fIndx) + st.substring(len1,st.length()), str),
+				Recur(st.substring(0,lIndx) + st.substring(len2,st.length()), str));
+	}
+}
