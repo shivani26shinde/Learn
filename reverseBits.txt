@@ -1,0 +1,14 @@
+public class Solution {
+    public long reverse(long a) {
+        long n=0;
+        int c = 0;
+        while(c<32){
+            n = n<<1;
+            if((long)(a&1) == 1) 
+                n=n^1;
+            a = a>>1;
+            c++;
+        }
+        return n;
+    }
+}
