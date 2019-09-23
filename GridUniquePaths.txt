@@ -1,0 +1,18 @@
+public class Solution {
+    int sum = 0;
+    public int uniquePaths(int A, int B) {
+        Paths(0, 0, A, B);
+        return sum;
+    }
+    public void Paths(int i, int j, int A, int B){
+        if(i<0 || j<0 || i==A || j==B){
+            return;
+        }
+        if(i==A-1 && j==B-1){
+            sum++;
+            return;
+        }
+        Paths(i+1, j, A, B);
+        Paths(i, j+1, A, B);
+    }
+}
