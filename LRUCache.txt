@@ -1,77 +1,74 @@
-/* package whatever; // don't place package name! */
-
-import java.util.*;
-import java.lang.*;
-import java.io.*;
-
-/* Name of the class has to be "Main" only if the class is public. */
-class Ideone
-{
-	static HashMap<Integer, Node> map = new HashMap<>();
-	static Node start;
-	static Node end;
-	static int size = 3;
-	public static void main (String[] args) throws java.lang.Exception
-	{
-		Insert(1);
-		Insert(10);
-		Insert(15);
-		Insert(12);
-		Insert(10);
-		Insert(18);
-		Insert(13);
-		Insert(18);
-		Node node = start;
-		while(node != null){
-			System.out.print(node.val+"  ");
-			node = node.right;
-		}
-	}
-	public static void Insert(int key){
-		Node node;
-		if(map.containsKey(key)){
-			node = map.get(key);
-			Remove(node);
-		} else{
-			node = new Node();
-			node.val = key;
-			node.left = null;
-			node.right = null;
-			if(map.size() == size){
-				map.remove(end.val);
-				Remove(end);
-			}
-		}
-		Add(node);
-		map.put(key, node);
-	}
-	public static void Add(Node node){
-		if(start != null){
-			start.left = node;
-			node.right = start;
-		}
-		start = node;
-		if(end == null){
-			end = start;
-		}
-	}
-	public static void Remove(Node node){
-		if(node.left != null){
-			node.left.right = node.right;
-		} else{
-			start = node.right;
-			start.left = null;
-		}
-		if(node.right != null){
-			node.right.left = node.left;
-		} else{
-			end = node.left;
-			end.right = null;
-		}
-	}
+public class Solution {
+    static int size;
+    static HashMap<Integer, Node> map;
+    static Node start;
+    static Node end;
+    public Solution(int capacity) {
+        size = capacity;
+        map = new HashMap<Integer, Node>();
+        start = null;
+        end = null;
+    }
+    
+    public int get(int key) {
+        if(map.containsKey(key)){
+            Node node = map.get(key);
+            remove(node);
+            add(node);
+            return node.val;
+        }
+        return -1;
+    }
+    
+    public void set(int key, int value) {
+        Node node;
+        if(map.containsKey(key)){
+            node = map.get(key);
+            node.val = value;
+            remove(node);
+        } else{
+            node = new Node();
+            node.val = value;
+            node.key = key;
+            node.left = null;
+            node.right = null;
+            if(map.size() == size){
+                map.remove(end.key);
+                remove(end);
+            }
+        }
+        map.put(key, node);
+        add(node);
+    }
+    
+    public void add(Node node) {
+        node.right = start;
+        node.left = null;
+        if(start != null){
+            start.left = node;
+        }
+        start = node;
+        if(end == null){
+            end = start;
+        }
+    }
+    
+    public void remove(Node node) {
+        if(node.left != null){
+            node.left.right = node.right;
+        } else{
+            start = node.right;
+        }
+        if(node.right != null){
+            node.right.left = node.left;
+        } else{
+            end = node.left;
+        }
+    }
 }
 class Node{
-	int val;
-	Node left;
-	Node right;
+    int val;
+    int key;
+    Node left;
+    Node right;
 }
