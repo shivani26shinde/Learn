@@ -1,0 +1,29 @@
+public class Solution {
+    public int exist(ArrayList<String> A, String B) {
+        int len1 = A.size();
+        int len2 = A.get(0).length();
+        for(int i=0;i<len1;i++){
+            for(int j=0;j<len2;j++){
+                if(Recur(i, j, 0, A, B, len1, len2)){
+                    return 1;
+                }
+            }
+        }
+        return 0;
+    }
+    public boolean Recur(int i, int j, int k, ArrayList<String> A, String B, int len1, int len2){
+        if(i<0 || j<0 || i==len1 || j==len2){
+            return false;
+        }
+        if(A.get(i).charAt(j) == B.charAt(k)){
+            if(k == B.length()-1){
+                return true;
+            }
+            return Recur(i+1, j, k+1, A, B, len1, len2)
+                || Recur(i-1, j, k+1, A, B, len1, len2)
+                || Recur(i, j+1, k+1, A, B, len1, len2)
+                || Recur(i, j-1, k+1, A, B, len1, len2);
+        }
+        return false;
+    }
+}
