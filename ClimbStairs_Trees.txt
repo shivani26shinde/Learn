@@ -1,0 +1,16 @@
+public class Solution {
+    int sum = 0;
+    public int climbStairs(int A) {
+        climb(A);
+        return sum;
+    }
+    public void climb(int k){
+        if(k<0) return;
+        if(k==0){
+            sum++;
+            return;
+        }
+        climb(k-1);
+        climb(k-2);
+    }
+}
