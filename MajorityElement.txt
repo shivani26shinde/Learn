@@ -1,0 +1,55 @@
+// Method 1
+
+public class Solution {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public int majorityElement(final List<Integer> A) {
+        HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
+        int n = A.size()/2;
+        for(int i=0;i<A.size();i++){
+            int val = A.get(i);
+            if(map.containsKey(val)){
+                int num = map.get(val);
+                if(num+1 > n){
+                    return val;
+                }
+                map.put(val, num+1);
+            } else{
+                map.put(A.get(i), 1);
+            }
+        }
+        return A.get(0);
+    }
+}
+
+// Method 2
+
+public class Solution {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public int majorityElement(final List<Integer> A) {
+        Collections.sort(A);
+        return A.get(A.size()/2);
+    }
+}
+
+// Method 3
+
+public class Solution {
+    // DO NOT MODIFY THE LIST. IT IS READ ONLY
+    public int majorityElement(final List<Integer> A) {
+        int c=1;
+        int num=A.get(0);
+        for(int i=1;i<A.size();i++){
+            if(num == A.get(i)){
+                c++;
+            } else{
+                c--;
+            }
+            if(c==0){
+                num = A.get(i);
+                c=1;
+            }
+        }
+        return num;
+    }
+}
+
