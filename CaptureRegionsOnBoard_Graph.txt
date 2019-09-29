@@ -1,0 +1,79 @@
+// Method 1
+
+public class Solution {
+    public void solve(ArrayList<ArrayList<Character>> a) {
+        int len1 = a.size();
+        int len2 = a.get(0).size();
+        for(int i=0;i<len1;i++){
+            for(int j=0;j<len2;j++){
+                if(a.get(i).get(j) == 'O' &&
+                    Flip(i, j, len1, len2, a)){
+                    a.get(i).set(j, 'X');    
+                }
+            }
+        }
+        return;
+    }
+    public boolean Flip(int i, int j, int len1, int len2, ArrayList<ArrayList<Character>> a){
+        if(i<0 || j<0 || i==len1 || j==len2){
+            return false;
+        }
+        if(a.get(i).get(j) == 'X'){
+            return true;
+        }
+        return Flip(i+1, j, len1, len2, a) &&
+            Flip(i-1, j, len1, len2, a) &&
+            Flip(i, j+1, len1, len2, a) &&
+            Flip(i, j-1, len1, len2, a);
+    }
+}
+
+// Method 2 - Optimal
+
+public class Solution {
+    public void solve(ArrayList<ArrayList<Character>> a) {
+        int len1 = a.size();
+        int len2 = a.get(0).size();
+        for(int i=0;i<len1;i++){
+            for(int j=0;j<len2;j++){
+                if(a.get(i).get(j) == 'O'){
+                    a.get(i).set(j, '#');    
+                }
+            }
+        }
+        for(int i=0;i<len1; i++){
+            Flip(i, 0, len1, len2, a);
+        }
+        for(int i=0;i<len1; i++){
+            Flip(i, len2-1, len1, len2, a);
+        }
+        for(int i=0;i<len2; i++){
+            Flip(0, i, len1, len2, a);
+        }
+        for(int i=0;i<len2; i++){
+            Flip(len1-1, i, len1, len2, a);
+        }
+        for(int i=0;i<len1;i++){
+            for(int j=0;j<len2;j++){
+                if(a.get(i).get(j) == '#'){
+                    a.get(i).set(j, 'X');    
+                }
+            }
+        }
+        return;
+    }
+    public void Flip(int i, int j, int len1, int len2, ArrayList<ArrayList<Character>> a){
+        if(i<0 || j<0 || i==len1 || j==len2){
+            return;
+        }
+        if(a.get(i).get(j) != '#'){
+            return;
+        }
+        a.get(i).set(j, 'O');
+        Flip(i+1, j, len1, len2, a);
+        Flip(i-1, j, len1, len2, a);
+        Flip(i, j+1, len1, len2, a);
+        Flip(i, j-1, len1, len2, a);
+    }
+}
+
