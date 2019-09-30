@@ -1,0 +1,28 @@
+/**
+ * Definition for binary tree
+ * class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) {
+ *      val = x;
+ *      left=null;
+ *      right=null;
+ *     }
+ * }
+ */
+public class Solution {
+    public int sumNumbers(TreeNode A) {
+        return Recur(A, 0) % 1003;
+    }
+    public int Recur(TreeNode A, int num){
+        if(A == null){
+            return 0;
+        }
+        num = num*10 + A.val;
+        if(A.left == null && A.right == null){
+            return num%1003;
+        }
+        return Recur(A.left, num%1003) + Recur(A.right, num%1003);
+    }
+}
