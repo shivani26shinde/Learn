@@ -1,0 +1,20 @@
+public class Solution {
+    public ArrayList<Integer> getRow(int A) {
+        ArrayList<Integer> fL = new ArrayList<Integer>();
+        ArrayList<Integer> temp = new ArrayList<Integer>();
+        fL.add(1);
+        for(int i=1;i<=A;i++){
+            for(int j=0;j<=fL.size();j++){
+                if(j-1 < 0 || j==fL.size()){
+                    temp.add(1);
+                } else{
+                    int num = fL.get(j) + fL.get(j-1);
+                    temp.add(num);
+                }
+            }
+            fL = new ArrayList<Integer>(temp);
+            temp = new ArrayList<Integer>();
+        }
+        return fL;
+    }
+}
