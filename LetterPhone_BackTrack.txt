@@ -1,0 +1,41 @@
+public class Solution {
+    Map<Integer, char[]> map = new HashMap<>();
+    ArrayList<String> fL = new ArrayList<String>();
+    public ArrayList<String> letterCombinations(String A) {
+        createMap();
+        Recur(0, "", A);
+        return fL;
+    }
+    public void createMap(){
+        map.put(0, new char[]{'0'});
+        map.put(1, new char[]{'1'});
+        char c = 'a';
+        for(int i=2;i<=9;i++){
+            if(i==7 || i==9){
+                char[] chars = new char[4];
+                for(int j=0;j<=3;j++){
+                    chars[j] = c;
+                    c++;
+                }
+                map.put(i, chars);
+            } else{
+                char[] chars = new char[3];
+                for(int j=0;j<3;j++){
+                    chars[j] = c;
+                    c++;
+                }
+                map.put(i, chars);
+            }
+        }
+    }
+    public void Recur(int c, String s, String A){
+        if(c == A.length()){
+            fL.add(s);
+            return;
+        }
+        char[] arr = map.get(Character.getNumericValue(A.charAt(c)));
+        for(int i=0;i<arr.length;i++){
+            Recur(c+1, s+arr[i], A);
+        }
+    }
+}
