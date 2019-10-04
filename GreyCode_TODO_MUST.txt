@@ -1,0 +1,9 @@
+public class Solution {
+    ArrayList<Integer> fL = new ArrayList<Integer>();
+    public ArrayList<Integer> grayCode(int a) {
+        for(int i=0;i<(1<<a);i++){
+            fL.add(i^(i>>1));
+        }
+        return fL;
+    }
+}
