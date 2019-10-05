@@ -1,0 +1,42 @@
+class Solution {
+    public int[] assignBikes(int[][] workers, int[][] bikes) {
+        HashSet<Integer> setW = new HashSet<>();
+        HashSet<Integer> setB = new HashSet<>();
+        ArrayList<Location> l = new ArrayList<>();
+        int[] ans = new int[workers.length];
+        for(int i=0;i<workers.length;i++){
+            int x = workers[i][0];
+            int y = workers[i][1];
+            for(int j=0;j<bikes.length;j++){
+                int num = Math.abs(bikes[j][0]-x) + Math.abs(bikes[j][1]-y);
+                Location loc = new Location(i, j, num);
+                l.add(loc);
+            }
+        }
+        Collections.sort(l, new Comparator<Location>(){
+            public int compare(Location loc1, Location loc2) 
+            { 
+                return loc1.d < loc2.d ? -1 : 1; 
+            } 
+        });
+        for(int i=0;i<l.size();i++){
+            Location loc = l.get(i);
+            if(!setW.contains(loc.w) && !setB.contains(loc.b)){
+                ans[loc.w] = loc.b;
+                setW.add(loc.w);
+                setB.add(loc.b);
+            }
+        }
+        return ans;
+    }
+}
+class Location{
+    int w;
+    int b;
+    int d;
+    public Location(int w, int b, int d){
+        this.w = w;
+        this.b = b;
+        this.d = d;
+    }
+}
