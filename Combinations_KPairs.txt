@@ -1,0 +1,18 @@
+class Solution {
+    List<List<Integer>> lst = new ArrayList<>();
+    public List<List<Integer>> combine(int n, int k) {
+        Recur(1, k, n, new ArrayList<>());
+        return lst;
+    }
+    public void Recur(int j, int k, int n, ArrayList<Integer> temp){
+        if(k==0){
+            lst.add(new ArrayList<>(temp));
+            return;
+        }
+        for(int i=j;i<=n;i++){
+            temp.add(i);
+            Recur(i+1, k-1, n, temp);
+            temp.remove(temp.size()-1);
+        }
+    }
+}
