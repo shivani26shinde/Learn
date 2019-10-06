@@ -1,0 +1,26 @@
+class Solution {
+    List<List<Integer>> lst = new ArrayList<>();
+    Set<List<Integer>> set = new HashSet<>();
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        Recur(1, 0, k, n, new ArrayList<>());
+        return lst;
+    }
+    public void Recur(int j, int sum, int k, int n, ArrayList<Integer> temp){
+        if(k == 0 && sum == n){
+            List<Integer> l = new ArrayList<>(temp);
+            if(!set.contains(l)){
+                lst.add(l);
+                set.add(l);
+            }
+            return;
+        }
+        if(sum > n || k == 0 || j == 10){
+            return;
+        }
+        for(int i=j;i<=9;i++){
+            temp.add(i);
+            Recur(i+1, sum+i, k-1, n, temp);
+            temp.remove(temp.size()-1);
+        }
+    }
+}
