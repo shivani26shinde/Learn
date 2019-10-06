@@ -1,0 +1,26 @@
+class Solution {
+    public int shortestWay(String source, String target) {
+        int loop = 0;
+        int sp = 0;
+        int tp = 0;
+        int prevP = -1;
+        int currP = 0;
+        while(tp<target.length()){
+            if(prevP == currP){
+                return -1;
+            }
+            loop++;
+            prevP = currP;
+            while(sp<source.length() && tp<target.length()){
+                if(source.charAt(sp) == target.charAt(tp)){
+                    sp++;tp++;
+                } else{
+                    sp++;
+                }
+            }
+            sp = 0;
+            currP = tp;
+        }
+        return loop;
+    }
+}
