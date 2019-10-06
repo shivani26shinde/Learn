@@ -1,0 +1,26 @@
+class Solution {
+    List<List<Integer>> lst = new ArrayList<>();
+    Set<List<Integer>> set = new HashSet<>();
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        Recur(0, 0, candidates, target, new ArrayList<Integer>());
+        return lst;
+    }
+    public void Recur(int j, int sum, int[] arr, int target, ArrayList<Integer> temp){
+        if(sum == target){
+            List<Integer> l = new ArrayList<>(temp);
+            if(!set.contains(l)){
+                lst.add(l);
+                set.add(l);
+            }
+            return;
+        }
+        if(sum > target || j==arr.length){
+            return;
+        }
+        for(int i=j;i<arr.length;i++){
+            temp.add(arr[i]);
+            Recur(i, sum+arr[i], arr, target, temp);
+            temp.remove(temp.size()-1);
+        }
+    }
+}
