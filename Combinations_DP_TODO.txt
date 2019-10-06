@@ -1,0 +1,48 @@
+// Dynamic Programming
+class Solution {
+    int total = 0;
+    public int combinationSum4(int[] nums, int target) {
+        int[] dp = new int[target+1];
+        for(int i=0;i<=target;i++){
+            dp[i] = -1;
+        }
+        dp[0] = 1;
+        return Recur(target, dp, nums);
+    }
+    public int Recur(int t, int[] dp, int[] nums){
+        if(t<0){
+            return 0;
+        }
+        if(dp[t] != -1){
+            return dp[t];
+        }
+        int res = 0;
+        for(int i=0;i<nums.length;i++){
+            res = res + Recur(t-nums[i], dp, nums);
+        }
+        dp[t] = res;
+        return res;
+    }
+}
+
+
+// Recursive - Time exceeded
+class Solution {
+    int total = 0;
+    public int combinationSum4(int[] nums, int target) {
+        Recur(0, 0, target, nums);
+        return total;
+    }
+    public void Recur(int j, int sum, int target, int[] nums){
+        if(sum == target){
+            total++;
+            return;
+        }
+        if(sum > target || j == nums.length){
+            return;
+        }
+        for(int i=j;i<nums.length;i++){
+            Recur(j, sum+nums[i], target, nums);
+        }
+    }
+}
