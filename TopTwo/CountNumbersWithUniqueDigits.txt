@@ -1,0 +1,38 @@
+// Recursive
+class Solution {
+    int c = 0;
+    public int countNumbersWithUniqueDigits(int n) {
+        if(n==0) return 1;
+        Recur("", n);
+        return c;
+    }
+    public void Recur(String str, int n){  
+        if(str.length() == n) return;
+        if(str.startsWith("0")) return;
+        for(char i='0';i<='9';i++){    
+            if(str.indexOf(i) == -1){
+                c++;
+                Recur(str+i, n);  
+            }                    
+        }
+    }
+}
+
+// Iterative
+class Solution {
+	int c = 1;
+	int val = (int)Math.pow(10, n);
+	for(int i=1;i<val;i++){
+		int num = i;
+		int[] vst = {0,0,0,0,0,0,0,0,0,0};
+		while(num!=0){
+			if(vst[num%10] == 1){
+				break;
+			}
+			vst[num%10] = 1;
+			num = num/10;
+		}
+		if(num == 0) c++;
+	}
+	return c;
+}
