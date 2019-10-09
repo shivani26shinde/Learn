@@ -1,0 +1,24 @@
+class Solution {
+    List<String> lst = new ArrayList<>();
+    public List<String> readBinaryWatch(int num) {
+        Recur(0, 0, 0, num);
+        return lst;
+    }
+    public void Recur(int min, int sec, int j, int n){
+        if(n==0){
+            if(min > 11 || sec > 59) return;
+            String secs = '0'+String.valueOf(sec);
+            if(sec/10 > 0) secs = String.valueOf(sec);
+            String s = String.valueOf(min) + ":" + secs;
+            lst.add(s);
+            return;
+        }
+        for(int i=j;i<10;i++){
+            if(i<=3){
+                Recur(min+(int)Math.pow(2,i), sec, i+1, n-1);
+            } else{
+                Recur(min, sec+(int)Math.pow(2,i-4), i+1, n-1);
+            }
+        }
+    }
+}
