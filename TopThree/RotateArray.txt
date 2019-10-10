@@ -1,0 +1,35 @@
+// Optimised
+class Solution {
+    public void rotate(int[] nums, int k) {
+        int n = nums.length;
+        if(k%n == 0) return;
+        int[] arr = nums.clone();
+        for(int i=0;i<n;i++){
+            nums[(i+k)%n] = arr[i];
+        }
+        return;
+    }
+}
+
+// Less Optimised
+class Solution {
+    public void rotate(int[] nums, int k) {
+        int n = nums.length;
+        if(k%n == 0) return;
+        int[] arr = new int[n-(k%n)];
+        for(int i=0;i<arr.length;i++){
+            arr[i] = nums[i];
+        }
+        int st = 0;
+        for(int i=arr.length;i<n;i++){
+            nums[st] = nums[i];
+            st++;
+        }
+        int st2 = 0;
+        for(int i=st;i<n;i++){
+            nums[i] = arr[st2];
+            st2++;
+        }
+        return;
+    }
+}
