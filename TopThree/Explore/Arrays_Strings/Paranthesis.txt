@@ -1,0 +1,19 @@
+class Solution {
+    List<String> lst = new ArrayList<>();
+    public List<String> generateParenthesis(int n) {
+        Recur("", n, n);
+        return lst;
+    }
+    public void Recur(String str, int i, int j){
+        if(j<i) return;
+        if(i==0){
+            for(int k=j;k>0;k--){
+                str += ')';
+            }
+            lst.add(str);
+            return;
+        }
+        Recur(str+'(', i-1, j);
+        Recur(str+')', i, j-1);
+    }
+}
