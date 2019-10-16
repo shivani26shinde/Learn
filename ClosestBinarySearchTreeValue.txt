@@ -1,0 +1,41 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    ArrayList<Node> lst;
+    public int closestValue(TreeNode root, double target) {
+        if(root == null) return 0;
+        lst = new ArrayList<Node>();
+        Recur(root, target);
+        Collections.sort(lst, new Comparator<Node>(){
+            public int compare(Node a, Node b){
+                if (a.diff < b.diff) return -1;
+                if (a.diff > b.diff) return 1;
+                return 0;
+            }
+        });
+        return lst.get(0).num;
+    }
+    public void Recur(TreeNode root, double t){
+        if(root == null) return;
+        double diff = Math.abs(t-root.val);
+        Node node = new Node(root.val, diff);
+        lst.add(node);
+        Recur(root.left, t);
+        Recur(root.right, t);
+    }
+}
+class Node{
+    int num;
+    double diff;
+    Node(int num, double diff){
+        this.num = num;
+        this.diff = diff;
+    }
+}
