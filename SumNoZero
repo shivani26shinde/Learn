@@ -1,0 +1,25 @@
+class Solution {
+    public int[] getNoZeroIntegers(int n) {
+        int i=1;
+        int diff=0;
+        int[] arr = new int[2];
+        while(i<n){
+            diff = n-i;
+            if(Check(i) && Check(diff)){
+                break;
+            }
+            i++;
+        }
+        arr[0] = i;
+        arr[1] = diff;
+        return arr;
+    }
+    public boolean Check(int num){
+        while(num!=0){
+            if(num%10 == 0)
+                return false;
+            num = num/10;
+        }
+        return true;
+    }
+}
