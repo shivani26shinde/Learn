@@ -1,0 +1,39 @@
+class Solution {
+    public int findMinDifference(List<String> timePoints) {
+        ArrayList<HourMin> list = new ArrayList<>();
+        int ans = Integer.MAX_VALUE;
+        for(int i=0;i<timePoints.size();i++){
+            String s = timePoints.get(i);
+            String[] str = s.split(":");
+            int num1 = Integer.parseInt(str[0]);
+            int num2 = Integer.parseInt(str[1]);
+            HourMin hr = new HourMin(num1,num2);
+            list.add(hr);
+        }
+        Collections.sort(list, new Comparator<HourMin>(){
+            public int compare(HourMin a, HourMin b){
+                if(a.hour == b.hour){
+                    return b.min-a.min;
+                }
+                return b.hour-a.hour;
+            }
+        });
+        for(int i=0;i<list.size()-1;i++){
+            ans = Calculate(ans, list.get(i), list.get(i+1));
+        }
+        return Calculate(ans, list.get(0), list.get(list.size()-1));
+    }
+    public int Calculate(int ans, HourMin hr1, HourMin hr2){
+        int val1 = (((23-hr1.hour)*60)+(60-hr1.min)) + ((hr2.hour*60)+hr2.min);
+        int val2 = ((hr1.hour-hr2.hour)*60) + (hr1.min-hr2.min);
+        return Math.min(ans,Math.min(val1, val2));
+    }
+}
+class HourMin {
+    int hour;
+    int min;
+    public HourMin(int hour, int min){
+        this.hour = hour;
+        this.min = min;
+    }
+}
