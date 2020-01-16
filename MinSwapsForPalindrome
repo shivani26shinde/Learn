@@ -1,0 +1,77 @@
+/* package whatever; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Ideone
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		String str = "mdccaam";
+		char[] ch = str.toCharArray(); 
+		int count = 0;
+		HashMap<Character, Integer> map = new HashMap<>();
+		for(int i=0;i<str.length();i++){
+			char c = str.charAt(i);
+			if(map.containsKey(c)){
+				map.put(c, map.get(c) + 1);
+			} else{
+				map.put(c, 1);
+			}
+			if(map.get(c) == 2){
+				map.remove(c);
+			}
+		}
+		if(map.size()>1){
+			System.out.println("NO");
+		} else{
+			int s=0,e=ch.length-1;
+			while(s<e){
+				if(ch[s] != ch[e]){
+					int loc = FindFromEnd(ch[s], s, e, ch);
+					if(loc != -1){
+						while(loc < e){
+							char chr = ch[loc];
+							ch[loc] = ch[loc+1];
+							ch[loc+1] = chr;
+							loc++;
+							count++;
+						}
+					} else{
+						loc = FindFromStart(ch[e], s, e, ch);
+						while(loc > s){
+							char chr = ch[loc];
+							ch[loc] = ch[loc-1];
+							ch[loc-1] = chr;
+							loc--;
+							count++;
+						}
+					}
+				}
+				s++;
+				e--;
+			}
+			System.out.println("Palindrome string is: " + String.valueOf(ch) + " & Count is: " + count);
+		}
+	}
+	
+	public static int FindFromStart(Character c, int start, int end, char[] ch){
+		for(int i=start;i<end;i++){
+			if(ch[i] == c){
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public static int FindFromEnd(Character c, int start, int end, char[] ch){
+		for(int i=end;i>start;i--){
+			if(ch[i] == c){
+				return i;
+			}
+		}
+		return -1;
+	}
+}
