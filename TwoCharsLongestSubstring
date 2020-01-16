@@ -1,0 +1,48 @@
+/* package whatever; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Ideone
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		String str = "aabbaabbaabbaa";
+		var c = str.charAt(0);
+		int count = 1;
+		int max = 1;
+		int start = 0, end = 0, finalS = 0, finalE = 0, diff = 1;
+		for(int i=1;i<str.length();i++){
+			if(str.charAt(i) == c){
+				if(count < 2){
+					count++;
+					end++;
+				} else{
+					diff = end-start+1;
+					if(diff>max){
+						max = diff;
+						finalS = start;
+						finalE = end;
+					}
+					i--;
+					start = i;
+					end = i;
+					count = 1;
+				}
+			} else{
+				c = str.charAt(i);
+				count = 1;
+				end++;
+			}
+		}
+		diff = end-start+1;
+		if(diff>max){
+			max = diff;
+			finalS = start;
+			finalE = end;
+		}
+		System.out.println(str.substring(finalS, finalE+1));
+	}
+}
