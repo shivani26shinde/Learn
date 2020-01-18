@@ -1,0 +1,17 @@
+public class GroupRed{
+     public static void main(String []args){
+        String s = "WWWRWWRWR";
+        int count = 0;
+        ArrayList<Integer> l = new ArrayList<>();
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i) == 'R'){
+                l.add(i);
+            }
+        }
+        int m = l.size()/2;
+        for(int i=0;i<l.size();i++){
+            count += Math.abs(l.get(m)-l.get(i)) - Math.abs(m-i);
+        }
+        System.out.println(count);
+     }
+}
