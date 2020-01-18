@@ -1,0 +1,21 @@
+public class NoThreeConsecutiveLetters{
+
+     public static void main(String []args){
+        String s = "eedaaad";
+        String ans = "";
+        int i=0;
+        while(i<s.length()){
+            int st=i;
+            int en=i;
+            while(i<s.length() && s.charAt(st) == s.charAt(en)){
+                en++;
+                i++;
+            }
+            if(en-st+1 > 2){
+               en = st+2; 
+            }
+            ans += s.substring(st,en);
+        }
+        System.out.println(ans);
+     }
+}
