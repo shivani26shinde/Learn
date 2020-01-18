@@ -1,0 +1,57 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+public class NetworkRank{
+
+     public static void main(String []args){
+        int N = 4;
+        int[] A = new int[]{1,2,3,3};
+        int[] B = new int[]{2,3,1,4};
+        int max = 0;
+        Map<Integer,Set<Integer>> map = new HashMap<>();
+        for(int i=0;i<A.length;i++){
+            int s = A[i];
+            int e = B[i];
+            if(map.containsKey(s)){
+                Set<Integer> set = map.get(s);
+                set.add(e);
+                map.put(s, set);
+            } else{
+                Set<Integer> set = new HashSet<>();
+                set.add(e);
+                map.put(s, set);
+            }
+            if(map.containsKey(e)){
+                Set<Integer> set = map.get(e);
+                set.add(s);
+                map.put(e, set);
+            } else{
+                Set<Integer> set = new HashSet<>();
+                set.add(s);
+                map.put(e, set);
+            }
+        }
+        ArrayList<Integer> l = new ArrayList<>(map.keySet());
+        for(int i=0;i<l.size()-1;i++){
+            for(int j=i+1;j<l.size();j++){
+                int s = l.get(i);
+                int e = l.get(j);
+                Set<Integer> set1 = map.get(s);
+                Set<Integer> set2 = map.get(e);
+                HashSet<Integer> set = new HashSet<>();
+                if(set1.contains(e)){
+                    set.add(s);
+                    set.add(e);
+                    for(Integer k: set1){
+                        set.add(k);
+                    }
+                    for(Integer k: set2){
+                        set.add(k);
+                    }
+                }
+                max = Math.max(max, set.size());
+            }
+        }
+        System.out.println(max);
+    }
+}
