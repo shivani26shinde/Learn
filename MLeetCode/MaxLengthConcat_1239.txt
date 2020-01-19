@@ -1,0 +1,49 @@
+class Solution {
+    boolean[] chr = new boolean[26];
+    int max = 0;
+    public int maxLength(List<String> arr) {
+        setMaxLength("", 0, arr);
+        return max;
+    }
+    
+    public void setMaxLength(String str, int start, List<String> arr){
+        max = Math.max(max, str.length());
+        if(start==arr.size()){
+            return;
+        }
+        for(int i=start;i<arr.size();i++){
+            String s = arr.get(i);
+            if(Check(s)){
+                add(s);
+                setMaxLength(str+s, i+1, arr);
+                remove(s);
+            }
+        }
+    }
+    
+    public boolean Check(String s){
+        boolean[] tempChr = new boolean[26];
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+            if(chr[c-'a'] || tempChr[c-'a']){
+                return false;
+            }
+            tempChr[c-'a'] = true;
+        }
+        return true;
+    }
+    
+    public void add(String s){
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+            chr[c-'a'] = true;
+        }
+    }
+    
+    public void remove(String s){
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+            chr[c-'a'] = false;
+        }
+    }
+}
