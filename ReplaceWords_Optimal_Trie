@@ -1,0 +1,68 @@
+class Solution {
+    Node root;
+    public String replaceWords(List<String> dict, String sentence) {
+        HashSet<String> set = new HashSet<>();
+        root = new Node();
+        for(int i=0;i<dict.size();i++){
+            insert(dict.get(i));
+        }
+        StringBuilder sb = new StringBuilder();
+        String[] str = sentence.split(" ");
+        
+        for(int i=0;i<str.length;i++){
+            String word = str[i];
+            str[i] = search(word);
+        }
+        sb.append(str[0]);
+        for(int i=1;i<str.length;i++){
+            sb.append(" ");
+            sb.append(str[i]);
+        }
+        return sb.toString();
+    }
+    
+    public void insert(String word) {
+        int len = word.length();
+        Node node = root;
+        for(int i=0;i<len;i++){
+            int ind = word.charAt(i) - 'a';
+            if(node.arr[ind] == null){
+                node.arr[ind] = new Node();
+            }
+            node = node.arr[ind];
+        }
+        node.isEnd = true;
+    }
+    
+    public String search(String word) {
+        int len = word.length();
+        Node node = root;
+        StringBuilder s = new StringBuilder();
+        for(int i=0;i<len;i++){
+            int ind = word.charAt(i) - 'a';
+            if(node.arr[ind] == null){
+                break;
+            }
+            s.append(word.charAt(i)); 
+            node = node.arr[ind];
+            if(node.isEnd){
+                break;
+            }
+        }
+        if(node.isEnd){
+            return s.toString();
+        }
+        return word;
+    }
+}
+
+class Node{
+    Node[] arr = new Node[26];
+    boolean isEnd;
+    public Node(){
+        this.isEnd = false;
+        for(int i=0;i<26;i++){
+            arr[i] = null;
+        }
+    }
+}
