@@ -1,0 +1,57 @@
+class TicTacToe {
+
+    /** Initialize your data structure here. */
+    int[] r;
+    int[] c;
+    int diag = 0;
+    int rDiag = 0;
+    int total;
+    public TicTacToe(int n) {
+        total = n;
+        r = new int[n];
+        c = new int[n];
+    }
+    
+    /** Player {player} makes a move at ({row}, {col}).
+        @param row The row of the board.
+        @param col The column of the board.
+        @param player The player, can be either 1 or 2.
+        @return The current winning condition, can be either:
+                0: No one wins.
+                1: Player 1 wins.
+                2: Player 2 wins. */
+    public int move(int row, int col, int player) {
+        if(player == 2){
+            r[row] = r[row]-1;
+            c[col] = c[col]-1;
+            if(row==col){
+                diag--;
+            }
+            if(row+col == total-1){
+                rDiag--;
+            }
+        } else{
+            r[row] = r[row]+1;
+            c[col] = c[col]+1;
+            if(row==col){
+                diag++;
+            }
+            if(row+col == total-1){
+                rDiag++;
+            }
+        }
+        if(Math.abs(r[row]) == total 
+           || Math.abs(c[col]) == total 
+           || Math.abs(diag) == total 
+           || Math.abs(rDiag) == total){
+            return player;
+        }
+        return 0;
+    }
+}
+
+/**
+ * Your TicTacToe object will be instantiated and called as such:
+ * TicTacToe obj = new TicTacToe(n);
+ * int param_1 = obj.move(row,col,player);
+ */
