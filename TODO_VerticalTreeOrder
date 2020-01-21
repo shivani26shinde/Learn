@@ -1,0 +1,47 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    Map<Integer,List<Integer>> map = new TreeMap<>();
+    List<List<Integer>> fL = new ArrayList<>();
+    List<Integer> l;
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        inOrder(new DataNode(root, 0));
+        for(Integer i: map.keySet()){
+            fL.add(map.get(i));
+        }
+        return fL;
+    }
+    
+    public void inOrder(DataNode dNode){
+        TreeNode treeNode = dNode.node;
+        if(treeNode != null){
+            int num = dNode.x;
+            inOrder(new DataNode(treeNode.left, num-1));
+            if(map.containsKey(num)){
+                l = map.get(num);
+                l.add(treeNode.val);
+                map.put(num, l);
+            } else{
+                l = new ArrayList<>();
+                l.add(treeNode.val);
+                map.put(num, l);
+            }
+            inOrder(new DataNode(treeNode.right, num+1));
+        }
+    }
+}
+class DataNode{
+    TreeNode node;
+    int x;
+    public DataNode(TreeNode node, int x){
+        this.node = node;
+        this.x = x;
+    }
+}
