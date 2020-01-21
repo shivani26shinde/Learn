@@ -1,0 +1,71 @@
+class Trie {
+
+    /** Initialize your data structure here. */
+    Node root;
+    public Trie() {
+        root = new Node();
+    }
+    
+    /** Inserts a word into the trie. */
+    public void insert(String word) {
+        int len = word.length();
+        Node node = root;
+        for(int i=0;i<len;i++){
+            int ind = word.charAt(i) - 'a';
+            if(node.arr[ind] == null){
+                node.arr[ind] = new Node();
+            }
+            node = node.arr[ind];
+        }
+        node.isEnd = true;
+    }
+    
+    /** Returns if the word is in the trie. */
+    public boolean search(String word) {
+        int len = word.length();
+        Node node = root;
+        for(int i=0;i<len;i++){
+            int ind = word.charAt(i) - 'a';
+            if(node.arr[ind] == null){
+                return false;
+            }
+            node = node.arr[ind];
+        }
+        if(node.isEnd){
+            return true;
+        }
+        return false;
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    public boolean startsWith(String prefix) {
+        int len = prefix.length();
+        Node node = root;
+        for(int i=0;i<len;i++){
+            int ind = prefix.charAt(i) - 'a';
+            if(node.arr[ind] == null){
+                return false;
+            }
+            node = node.arr[ind];
+        }
+        return true;
+    }
+}
+class Node{
+    Node[] arr = new Node[26];
+    boolean isEnd;
+    public Node(){
+        this.isEnd = false;
+        for(int i=0;i<26;i++){
+            arr[i] = null;
+        }
+    }
+}
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie obj = new Trie();
+ * obj.insert(word);
+ * boolean param_2 = obj.search(word);
+ * boolean param_3 = obj.startsWith(prefix);
+ */
