@@ -1,0 +1,60 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    List<List<Integer>> fL = new ArrayList<>();
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        Queue<DataNode> q = new LinkedList<>();
+        Queue<DataNode> p = new PriorityQueue<>(new Comparator<DataNode>(){
+            @Override
+            public int compare(DataNode a, DataNode b){
+                if(a.x == b.x){
+                    if(a.y == b.y){
+                        return a.node.val - b.node.val;
+                    }
+                    return b.y - a.y;
+                }
+                return a.x - b.x;
+            }
+        });
+        
+        q.add(new DataNode(root, 0, 0));
+        while(!q.isEmpty()){
+            DataNode node = q.poll();
+            p.add(node);
+            if(node.node.left!=null){
+                q.add(new DataNode(node.node.left,node.x-1,node.y-1));
+            }
+            if(node.node.right!=null){
+                q.add(new DataNode(node.node.right,node.x+1,node.y-1));
+            }
+        }
+        int pos = Integer.MIN_VALUE;
+        while(!p.isEmpty()){
+            DataNode node = p.poll();
+            if(node.x != pos){
+                pos = node.x;
+                fL.add(new ArrayList<Integer>());
+            }
+            fL.get(fL.size()-1).add(node.node.val);
+        }
+        return fL;
+    }
+}
+class DataNode{
+    TreeNode node;
+    int x;
+    int y;
+    public DataNode(TreeNode node, int x, int y){
+        this.node = node;
+        this.x = x;
+        this.y = y;
+    }
+}
+
