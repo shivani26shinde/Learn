@@ -1,0 +1,56 @@
+class Solution {
+    int[] parent;
+    public int minimumCost(int N, int[][] connections) {
+        ArrayList<Edge> list = new ArrayList<>();
+        parent = new int[N];
+        int edge = 0;
+        for(int i=0;i<N;i++){
+            parent[i] = -1;
+        }
+        int total = 0;
+        for(int i=0;i<connections.length;i++){
+            int[] arr = connections[i];
+            list.add(new Edge(arr[0]-1,arr[1]-1,arr[2]));
+        }
+        Collections.sort(list, new Comparator<Edge>(){
+            public int compare(Edge e1, Edge e2){
+                return e1.cost-e2.cost;
+            }
+        });
+        for(int i=0;i<list.size();i++){
+            Edge e = list.get(i);
+            int pSrc = getParent(e.src);
+            int pDest = getParent(e.dest);
+            if(pSrc != pDest){
+                Union(pSrc,pDest);
+                edge++;
+                total += e.cost;
+                if(edge == N-1){
+                    return total;
+                }
+            }
+        }
+        return -1;
+    }
+    public int getParent(int i){
+        if(parent[i] == -1){
+            return i;
+        }
+        return getParent(parent[i]);
+    }
+    public void Union(int src, int dest){
+        int p1 = getParent(src);
+        int p2 = getParent(dest);
+        parent[p1] = p2;
+    }
+}
+class Edge{
+    int src;
+    int dest;
+    int cost;
+    public Edge(int src, int dest, int cost){
+        this.src = src;
+        this.dest = dest;
+        this.cost = cost;
+    }
+}

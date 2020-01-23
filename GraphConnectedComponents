@@ -1,0 +1,47 @@
+class Solution {
+    Graph g;
+    boolean[] notVisited;
+    int count = 0;
+    public int countComponents(int n, int[][] edges) {
+        g = new Graph(n);
+        notVisited = new boolean[n];
+        for(int i=0;i<n;i++){
+            notVisited[i] = true;
+        }
+        for(int i=0;i<edges.length;i++){
+            int[] arr = edges[i];
+            g.addEdge(arr[0], arr[1]);
+        }
+        for(int i=0;i<n;i++){
+            if(notVisited[i]){
+                count++;
+                Dfs(i);
+            }
+        }
+        return count;
+    }
+    public void Dfs(int i){
+        notVisited[i] = false;
+        ArrayList<Integer> l = g.edges[i];
+        for(int j=0;j<l.size();j++){
+            if(notVisited[l.get(j)]){
+                Dfs(l.get(j));
+            }
+        }
+    }
+}
+class Graph{
+    int v;
+    ArrayList<Integer>[] edges;
+    public Graph(int V){
+        this.v= V;
+        this.edges = new ArrayList[this.v];
+        for(int i=0;i<this.v;i++){
+            this.edges[i] = new ArrayList<>();
+        }
+    }
+    public void addEdge(int src, int dest){
+        this.edges[src].add(dest);
+        this.edges[dest].add(src);
+    }
+}

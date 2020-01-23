@@ -1,0 +1,28 @@
+class Solution {
+    public int minIncrementForUnique(int[] A) {
+        ConcurrentHashMap<Integer, Integer> map = new ConcurrentHashMap<>();
+        int count = 0;
+        for(int i=0;i<A.length;i++){
+            if(map.containsKey(A[i])){
+                map.put(A[i], map.get(A[i]) + 1);
+            }
+            else{
+                map.put(A[i], 1);
+            }
+        }
+        for(Integer i: map.keySet()){
+            int carry = map.get(i)-1;
+            int num = i+1;
+            while(carry!=0){
+                count += carry;
+                if(map.containsKey(num)){
+                    carry = carry+map.get(num);
+                    map.put(num, 1);
+                }
+                num++;
+                carry--;
+            }
+        }
+        return count;
+    }
+}
