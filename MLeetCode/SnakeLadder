@@ -1,0 +1,34 @@
+class Solution {
+    int N;
+    public int snakesAndLadders(int[][] board) {
+        N = board.length;
+        Queue<Integer> q = new LinkedList<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(1,0);
+        q.add(1);
+        while(!q.isEmpty()){
+            int num = q.poll();
+            if(num == N*N){
+                return map.get(num);
+            }
+            for(int i=num+1;i<=Math.min(num+6,N*N);i++){
+                int[] rc = get(i);
+                int r = rc[0], c = rc[1];
+                int val = board[r][c] == -1 ? i : board[r][c];
+                if(!map.containsKey(val)){
+                    map.put(val,map.get(num)+1);
+                    q.add(val);
+                }
+            }
+        }
+        return -1;
+    }
+    public int[] get(int i){
+        int arr[] = new int[2];
+        int r = (i-1)/N;
+        arr[0] = N-1-r;
+        int c = (i-1)%N;
+        arr[1] = r%2 == 0 ? c : N-1-c;
+        return arr;
+    }
+}
