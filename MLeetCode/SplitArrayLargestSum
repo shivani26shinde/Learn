@@ -1,0 +1,39 @@
+class Solution {
+    int ans = 0;
+    public int splitArray(int[] nums, int m) {
+        int total = 0;
+        int max = -1;
+        int N = nums.length;
+        for(int i=0;i<N;i++){
+            total += nums[i];
+            max = Math.max(max, nums[i]);
+        }
+        if(m==1) return total;
+        if(m==N) return max;
+        int start=max,end=total;
+        while(start<end){
+            int mid = start+(end-start)/2;
+            if(canSplit(mid,m,nums)){
+                ans = mid;
+                end = mid;
+            } else{
+                start = mid+1;
+            }
+        }
+        return ans;
+    }
+    
+    public boolean canSplit(int num,int m,int[] nums){
+        int count = 1;
+        int sum = 0;
+        for(int i=0;i<nums.length;i++){
+            sum += nums[i];
+            if(sum>num){
+                sum = nums[i];
+                count++;
+                if(count>m) return false;
+            }
+        }
+        return true;
+    }
+}
