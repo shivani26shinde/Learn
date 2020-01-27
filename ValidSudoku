@@ -1,0 +1,37 @@
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        HashMap<Integer,HashSet<Integer>> mapRow = new HashMap<>();
+        HashMap<Integer,HashSet<Integer>> mapCol = new HashMap<>();
+        HashMap<Integer,HashSet<Integer>> mapBox = new HashMap<>();
+        int N = board.length;
+        for(int i=0;i<N;i++){
+            mapRow.put(i,new HashSet<Integer>());
+            mapCol.put(i,new HashSet<Integer>());
+            mapBox.put(i,new HashSet<Integer>());
+        }
+        for(int i=0;i<N;i++){
+            for(int j=0;j<N;j++){
+                if(board[i][j] == '.') continue;
+                int num = Character.getNumericValue(board[i][j]);
+                
+                HashSet<Integer> row = mapRow.get(i);
+                if(row.contains(num)) return false;
+                row.add(num);
+    
+                HashSet<Integer> col = mapCol.get(j);
+                if(col.contains(num)) return false;
+                col.add(num);
+                
+                int boxNum = 3*(i/3)+(j/3);
+                HashSet<Integer> box = mapBox.get(boxNum);
+                if(box.contains(num)) return false;
+                box.add(num);
+                
+                mapRow.put(i, row);
+                mapCol.put(j, col);
+                mapBox.put(boxNum, box);
+            }
+        }
+        return true;
+    }
+}
