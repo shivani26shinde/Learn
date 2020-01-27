@@ -1,0 +1,27 @@
+class FooBar {
+    private int n;
+    private AtomicBoolean printDone = new AtomicBoolean(true);
+    public FooBar(int n) {
+        this.n = n;
+    }
+
+    public synchronized void foo(Runnable printFoo) throws InterruptedException {    
+        for (int i = 0; i < n; i++) {
+            while(!printDone.get())
+                wait();
+            printFoo.run();
+            printDone.set(false);
+            notify();
+        }
+    }
+
+    public synchronized void bar(Runnable printBar) throws InterruptedException {
+        for (int i = 0; i < n; i++) {
+            while (printDone.get())
+                wait(); 
+            printBar.run();
+            printDone.set(true);
+            notify();
+        }
+    }
+}
