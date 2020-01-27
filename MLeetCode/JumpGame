@@ -1,0 +1,29 @@
+class Solution {
+    public boolean canJump(int[] nums) {
+        int N = nums.length;
+        
+        // Single element or no element
+        if(N<=1) return true;
+        
+        // First element is 0
+        if(nums[0]==0) return false;
+        
+        int currLadder = nums[0]-1;
+        for(int i=1;i<N;i++){
+            
+            // Reached last element
+            if(i==N-1) return true;
+            
+            // Update ladder to the longer one
+            if(currLadder<nums[i]){
+                currLadder = nums[i];
+            }
+            
+            // Element is 0, so no ladder
+            if(currLadder==0) return false;
+            currLadder--;
+        }
+        
+        return true;
+    }
+}
