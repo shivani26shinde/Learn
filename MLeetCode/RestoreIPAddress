@@ -1,0 +1,40 @@
+class Solution {
+    List<String> list = new ArrayList<>();
+    public List<String> restoreIpAddresses(String s) {
+        if(s.length()<4) return list;
+        getIP("",0,3,s);
+        return list;
+    }
+    public void getIP(String str, int start, int dot, String s){
+        if(start == s.length()) return;
+        if(dot==0){
+            String subS = s.substring(start);
+            if(subS.length()>3 
+               || Integer.parseInt(subS)>255 
+               || checkZero(subS)) return;
+            str += subS;
+            list.add(str);
+            return;
+        }
+        for(int i=start;i<s.length();i++){
+            int ind = str.lastIndexOf(".");
+            String subS = str.substring(ind+1) + s.charAt(i);
+            if(subS.length()>3 
+               || Integer.parseInt(subS)>255 
+               || checkZero(subS)) return;
+            str += s.charAt(i);
+            getIP(str+'.', i+1, dot-1, s);
+        }
+    }
+    public boolean checkZero(String s){
+        int count=0;
+        int i=0;
+        while(i<s.length() && Character.getNumericValue(s.charAt(i)) == 0){
+            count++;
+            if(count>1) return true;
+            i++;
+        }
+        if(count!=0 && i<s.length()) return true;
+        return false;
+    }
+}
