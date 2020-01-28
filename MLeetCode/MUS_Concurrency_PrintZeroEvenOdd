@@ -1,0 +1,44 @@
+class ZeroEvenOdd {
+    private int n;
+    private AtomicBoolean zero = new AtomicBoolean(true);
+    private AtomicInteger counter = new AtomicInteger(1);
+    public ZeroEvenOdd(int n) {
+        this.n = n;
+    }
+
+    // printNumber.accept(x) outputs "x", where x is an integer.
+    public synchronized void zero(IntConsumer printNumber) throws InterruptedException {
+        while(counter.get()<=n){
+            while(!zero.get())
+                wait();
+            if(counter.get()<=n)
+                printNumber.accept(0);
+            zero.set(false);
+            notifyAll();
+        }
+    }
+
+    public synchronized void even(IntConsumer printNumber) throws InterruptedException {
+        while(counter.get()<=n){
+            while(zero.get() || counter.get()%2 == 1)
+                wait();
+            if(counter.get()<=n){
+                printNumber.accept(counter.getAndIncrement());
+            }
+            zero.set(true);
+            notifyAll();
+        }
+    }
+
+    public synchronized void odd(IntConsumer printNumber) throws InterruptedException {
+        while(counter.get()<=n){
+            while(zero.get() || counter.get()%2 == 0)
+                wait();
+            if(counter.get()<=n){
+                printNumber.accept(counter.getAndIncrement());
+            }
+            zero.set(true);
+            notifyAll();
+        }
+    }
+}
