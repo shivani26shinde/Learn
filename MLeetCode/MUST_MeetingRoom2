@@ -1,0 +1,33 @@
+class Solution {
+    public int minMeetingRooms(int[][] intervals) {
+        ArrayList<Meeting> list = new ArrayList<>();
+        PriorityQueue<Integer> q = new PriorityQueue<>();
+        if(intervals.length < 1) return 0;
+        for(int i=0;i<intervals.length;i++){
+            int[] arr = intervals[i];
+            list.add(new Meeting(arr[0],arr[1]));
+        }
+        Collections.sort(list, new Comparator<Meeting>() {
+            public int compare(Meeting a, Meeting b) {
+                return a.start-b.start;
+            }
+        }); 
+        q.add(list.get(0).end);
+        for(int i=1;i<list.size();i++){
+            Meeting m = list.get(i);
+            if(m.start>=q.peek()){
+                q.poll();
+            }
+            q.add(m.end);
+        }
+        return q.size();
+    }
+}
+class Meeting{
+    int start;
+    int end;
+    public Meeting(int start, int end){
+        this.start = start;
+        this.end = end;
+    }
+}
