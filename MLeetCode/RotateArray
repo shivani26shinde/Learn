@@ -1,0 +1,37 @@
+class Solution {
+    public void rotate(int[][] matrix) {
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int rowS=0,colS=0,rowE=row-1,colE=col-1;
+        while(rowS<=rowE && colS<=colE){
+            int diff = colE-colS+1;
+            int[] temp = new int[diff];
+            int tempS = colS;
+            for(int i=0;i<diff;i++){
+                temp[i] = matrix[rowS][tempS];
+                tempS++;
+            }
+            tempS = rowE;
+            for(int i=colS;i<=colE;i++){
+                matrix[rowS][i] = matrix[tempS][colS];
+                    tempS--;
+            }
+            tempS = colS; 
+            for(int i=rowS;i<=rowE;i++){
+                matrix[i][colS] = matrix[rowE][tempS];
+                    tempS++;
+            }
+            tempS = rowE; 
+            for(int i=colS;i<=colE;i++){
+                matrix[rowE][i] = matrix[tempS][colE];
+                    tempS--;
+            }
+            tempS = 0;
+            for(int i=rowS;i<=rowE;i++){
+                matrix[i][colE] = temp[tempS];
+                    tempS++;
+            }
+            rowS++;rowE--;colS++;colE--;
+        }
+    }
+}
