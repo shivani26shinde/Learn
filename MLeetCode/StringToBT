@@ -1,0 +1,29 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    StringBuilder sb = new StringBuilder();
+    public String tree2str(TreeNode t) {
+        if(t==null) return "";
+        construct(t);
+        return sb.substring(1,sb.length()-1).toString();
+    }
+    public void construct(TreeNode root){
+        if(root==null){
+            return;
+        }
+        sb.append("(");
+        sb.append(root.val);
+        if(root.left==null && root.right!=null)
+            sb.append("()");
+        construct(root.left);
+        construct(root.right);
+        sb.append(")");
+    }
+}
