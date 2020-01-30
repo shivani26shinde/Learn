@@ -1,0 +1,30 @@
+class Solution {
+    public int closedIsland(int[][] grid) {
+        int row = grid.length;
+        int col = grid[0].length;
+        int count = 0;
+        for(int i=0;i<col;i++){
+            if(grid[0][i]==0) grid[0][i] = -9;
+            if(grid[row-1][i]==0) grid[row-1][i] = -9;
+        }
+        for(int i=0;i<row;i++){
+            if(grid[i][0]==0) grid[i][0] = -9;
+            if(grid[i][col-1]==0) grid[i][col-1] = -9;
+        }  
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(grid[i][j]==0 && isClosedIsland(i,j,row,col,grid)) count++;
+            }
+        }
+        return count;
+    }
+    public boolean isClosedIsland(int i, int j, int row, int col, int[][] grid){
+        if(i<0 || j<0 || i==row || j==col || grid[i][j]==-1) return false;
+        if(grid[i][j]==1) return true;
+        grid[i][j] = 1;
+        return isClosedIsland(i+1,j,row,col,grid) 
+            & isClosedIsland(i,j+1,row,col,grid)
+            & isClosedIsland(i-1,j,row,col,grid)
+            & isClosedIsland(i,j-1,row,col,grid);
+    }
+}
