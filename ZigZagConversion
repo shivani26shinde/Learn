@@ -1,0 +1,28 @@
+// Formula OR Pattern : If rowNum = 4 then, row 1 --> start+6->start+6+0->start+6+0+6->.., row 2 --> (start+1)+4->(start+1)+4+2->...
+
+class Solution {
+    public String convert(String s, int numRows) {
+        if(numRows<=1 || numRows>=s.length()) return s;
+        StringBuilder sb = new StringBuilder();
+        int n = numRows;
+        int val = n+(n-2);
+        int temp = val;
+        sb.append(s.charAt(0));
+        while(numRows>0){
+            int i=n-numRows,j=val-temp;
+            while(i<s.length()){
+                if(j!=0) sb.append(s.charAt(i));
+                if(j==temp){
+                    i+=val-temp;
+                    j=val-temp;
+                } else{
+                    i+=temp;
+                    j=temp;
+                }
+            }
+            temp-=2;
+            numRows--;
+        }
+        return sb.toString();
+    }
+}
