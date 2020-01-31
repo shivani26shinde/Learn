@@ -1,0 +1,66 @@
+class Solution {
+    List<String> list = new ArrayList<String>();
+    public List<String> fullJustify(String[] words, int maxWidth) {
+        int i=0;
+        while(i<words.length){
+            StringBuilder sb = new StringBuilder();
+            int len = words[i].length();
+            sb.append(words[i++]);
+            while(i<words.length && sb.length()<maxWidth){
+                if(words[i].length()+1+sb.length() > maxWidth) break;
+                len += words[i].length();
+                sb.append(" ");
+                sb.append(words[i++]);
+            }
+            // Perfectly fits in the line
+            if(sb.length()==maxWidth){
+                list.add(sb.toString());
+                continue;
+            }
+            if(sb.length()<maxWidth){
+                String s = sb.toString();
+                String[] arr = s.split(" ");
+                int spaceCount = arr.length-1;
+                int spaces = maxWidth-len;
+                sb = new StringBuilder();
+                // Single word or last line
+                if(spaceCount==0 || i==words.length){
+                    int count=0;
+                    for(int k=0;k<arr.length;k++){
+                        sb.append(arr[k]);
+                        if(count<spaces){
+                            sb.append(" ");
+                            count++;
+                        }
+                    }
+                    while(count<spaces){
+                        sb.append(" ");
+                        count++;
+                    }
+                    list.add(sb.toString());
+                    continue;
+                }
+                int[] spaceArr = new int[spaceCount];
+                int spaceStart = 0;
+                // Add the spaces
+                while(spaceStart<spaces){
+                    int j=0;
+                    while(spaceStart<spaces && j<spaceCount){
+                        spaceArr[j++] += 1;
+                        spaceStart++;
+                    }
+                }
+                for(int k=0;k<arr.length;k++){
+                    sb.append(arr[k]);
+                    if(k<spaceArr.length){
+                        for(int l=0;l<spaceArr[k];l++){
+                            sb.append(" ");
+                        }
+                    }
+                }
+                list.add(sb.toString());
+            }
+        }
+        return list;
+    }
+}
