@@ -1,0 +1,30 @@
+class Solution {
+    public List<String> removeComments(String[] source) {
+        List<String> list = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        boolean isBlock = false;
+        for(int i=0;i<source.length;i++){
+            String s = source[i];
+            if(!isBlock) sb = new StringBuilder();
+            int j=0;
+            while(j<s.length()){
+                if(!isBlock && j+1<s.length() && s.charAt(j) == '/' && s.charAt(j+1) == '*'){
+                    isBlock = true;
+                    j++;
+                } else if(isBlock && j+1<s.length() && s.charAt(j) == '*' && s.charAt(j+1) == '/'){
+                    isBlock = false;
+                    j++;
+                } else if(!isBlock && j+1<s.length() && s.charAt(j) == '/' && s.charAt(j+1) == '/'){
+                    break;
+                } else if(!isBlock){
+                    sb.append(s.charAt(j));
+                }
+                j++;
+            }
+            if(!isBlock && sb.length()>0){
+                list.add(sb.toString());
+            }
+        }
+        return list;
+    }
+}
