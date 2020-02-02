@@ -1,0 +1,43 @@
+// Solution 1
+class Solution {
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        if(p.right!=null){
+            p=p.right;
+            while(p.left!=null) p=p.left;
+            return p;
+        }
+        Stack<TreeNode> st = new Stack<>();
+        int prev = Integer.MIN_VALUE;
+        while(!st.isEmpty() || root!=null){
+            while(root!=null){
+                st.push(root);
+                root=root.left;
+            }
+            root = st.pop();
+            if(prev==p.val) return root;
+            prev=root.val;
+            root=root.right;
+        }
+        return null;
+    }
+}
+
+// Solution 2
+class Solution {
+    ArrayList<TreeNode> list = new ArrayList<>();
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        populate(root);
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).val == p.val && i+1<list.size())
+                return list.get(i+1);
+        }
+        return null;
+    }
+    public void populate(TreeNode root){
+        if(root==null) return;
+        populate(root.left);
+        list.add(root);
+        populate(root.right);
+    }
+}
+
