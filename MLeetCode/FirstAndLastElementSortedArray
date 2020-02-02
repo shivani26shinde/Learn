@@ -1,0 +1,52 @@
+class Solution {
+    int[] nums;
+    int target;
+    public int[] searchRange(int[] nums, int target) {
+        this.nums=nums;
+        this.target=target;
+        
+        int i=0,j=nums.length-1;
+        int mid=-1,left=-1,right=-1;
+        
+        while(i<=j){
+            int m=i+(j-i)/2;
+            if(nums[m]==target){
+                mid=m;
+                left=getLeft(i,m);
+                right=getRight(m,j);
+                break;
+            } else if(nums[m]<target){
+                i=m+1;
+            } else{
+                j=m-1;
+            }
+        }
+        int[] ans = new int[2];
+        ans[0]=left; ans[1]=right;
+        return ans;
+    }
+    public int getLeft(int i,int j){
+        int mid=-1;
+        while(i<=j){
+            int m=i+(j-i)/2;
+            if(this.nums[m]<this.target) i=m+1;
+            else{
+                mid=m;
+                j=m-1;
+            }
+        }
+        return mid;
+    }
+    public int getRight(int i,int j){
+        int mid=-1;
+        while(i<=j){
+            int m=i+(j-i)/2;
+            if(this.nums[m]>this.target) j=m-1;
+            else{
+                mid=m; 
+                i=m+1;
+            }
+        }
+        return mid;
+    }
+}
