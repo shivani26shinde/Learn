@@ -1,0 +1,28 @@
+class MyStack {
+
+    /** Initialize your data structure here. */
+    Deque<Integer> q;
+    public MyStack() {
+        q = new LinkedList<>();
+    }
+    
+    /** Push element x onto stack. */
+    public void push(int x) {
+        q.addFirst(x);
+    }
+    
+    /** Removes the element on top of the stack and returns that element. */
+    public int pop() {
+        return q.removeFirst();
+    }
+    
+    /** Get the top element. */
+    public int top() {
+        return q.getFirst();
+    }
+    
+    /** Returns whether the stack is empty. */
+    public boolean empty() {
+        return q.isEmpty();
+    }
+}
