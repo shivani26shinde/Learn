@@ -1,0 +1,53 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    HashMap<TreeNode,TreeNode> map = new HashMap<>();
+    HashSet<TreeNode> set = new HashSet<>();
+    List<Integer> list = new ArrayList<>();
+    Queue<TreeNode> q = new LinkedList<>();
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
+        dfs(root,null);
+        q.add(target);
+        set.add(target);
+        while(!q.isEmpty()){
+            int n=q.size();
+            if(K==0){
+                for(int i=0;i<n;i++){
+                    list.add(q.poll().val);
+                }
+                return list;
+            }
+            for(int i=0;i<n;i++){
+                TreeNode node = q.poll();
+                if(node.left != null && !set.contains(node.left)){
+                    q.add(node.left);
+                    set.add(node.left);
+                }
+                if(node.right != null && !set.contains(node.right)){
+                    q.add(node.right);
+                    set.add(node.right);
+                }
+                TreeNode parent = map.get(node);
+                if(parent != null && !set.contains(parent)){
+                    q.add(parent);
+                    set.add(parent);
+                }
+            }
+            K--;
+        }
+        return list;
+    }
+    public void dfs(TreeNode root, TreeNode parent){
+        if(root==null) return;
+        map.put(root,parent);
+        dfs(root.left,root);
+        dfs(root.right,root);
+    }
+}
