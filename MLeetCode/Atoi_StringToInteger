@@ -1,0 +1,38 @@
+class Solution {
+    public int myAtoi(String str) {
+        str = str.trim();
+        boolean negSign = false;
+        StringBuilder sb = new StringBuilder();
+        long ans = 0;
+        int pow = 0;
+        int i=0;
+        
+        if (i<str.length() && (str.charAt(i)=='-' || str.charAt(i)=='+')) {
+            negSign = str.charAt(i) == '-' ? true : false;
+            i++;
+        }
+        
+        while(i<str.length()){
+            if(!Character.isDigit(str.charAt(i))) break;
+            sb.append(str.charAt(i));
+            i++;
+        }
+        
+        str = sb.reverse().toString();
+        
+        i = 0;
+        while(i<str.length()){
+            ans += Character.getNumericValue(str.charAt(i)) * Math.pow(10,pow);
+            if(ans==Integer.MAX_VALUE){
+                if(negSign) return -1*Integer.MAX_VALUE;
+            }
+            if(ans>=Integer.MAX_VALUE){
+                if(negSign) return Integer.MIN_VALUE;
+                else return Integer.MAX_VALUE;
+            }
+            pow++;
+            i++;
+        }
+        return negSign ? -1*(int)ans : (int)ans;
+    }
+}
