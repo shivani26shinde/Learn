@@ -1,0 +1,106 @@
+class LFUCache {
+    HashMap<Integer,Node> map = new HashMap<>();
+    PriorityQueue<Node> q;
+    Node head;
+    Node tail;
+    int capacity;
+    public LFUCache(int capacity) {
+        this.capacity = capacity;
+        q = new PriorityQueue<>(new Comparator<Node>(){
+            public int compare(Node a, Node b){
+                return a.count-b.count;
+            }
+        });
+    }
+    
+    public int get(int key) {
+        if(!map.containsKey(key)) return -1;
+        Node node = map.get(key);
+        remove(node);
+        node.count++;
+        updateHeap(node);
+        add(node);
+        return node.val;
+    }
+    
+    public void put(int key, int value) {
+        if(this.capacity==0) return;
+        Node node = new Node();
+        if(map.containsKey(key)){
+            node = map.get(key);
+            remove(node);
+            node.count++;
+        } else{
+            if(map.size()==this.capacity){
+                removeLeast();
+            }
+        }
+        node.key = key;
+        node.val = value;
+        updateHeap(node);
+        add(node);
+        map.put(key,node);
+    }
+    
+    public void removeLeast(){
+        if(map.isEmpty() || q.isEmpty()) return;
+        int min = q.peek().count;
+        Set<Node> set = new HashSet<>();
+        while(!q.isEmpty() && q.peek().count == min) set.add(q.poll());
+        if(set.size()==1){
+            Node node = set.iterator().next();
+            map.remove(node.key);
+            remove(node);
+        } else{
+            Node current = tail;
+            while(current!=head){
+                if(set.contains(current)){
+                    set.remove(current);
+                    map.remove(current.key);
+                    remove(current);
+                    for(Node node: set){
+                        q.add(node);
+                    }
+                    break;
+                } else{
+                    current = current.left;
+                }
+            }
+        }
+    }
+    
+    public void updateHeap(Node node){
+        q.remove(node);
+        q.add(node);
+    }
+    
+    public void add(Node node){
+        node.right = head;
+        node.left = null;
+        if(head!=null) head.left=node;
+        head = node;
+        if(tail==null) tail=node;
+    }
+    
+    public void remove(Node node){
+        if(node.left!=null) node.left.right = node.right;
+        else head = node.right;
+        
+        if(node.right!=null) node.right.left = node.left;
+        else tail = node.left;
+    }
+}
+class Node{
+    int key;
+    int val;
+    int count=0;
+    Node left;
+    Node right;
+}
+
+/**
+ * Your LFUCache object will be instantiated and called as such:
+ * LFUCache obj = new LFUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
