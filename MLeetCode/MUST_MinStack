@@ -1,0 +1,30 @@
+class MinStack {
+
+    /** initialize your data structure here. */
+    int min;
+    Deque<Integer> dq;
+    PriorityQueue<Integer> q;
+    public MinStack() {
+        dq = new LinkedList<>();
+        q = new PriorityQueue<>();
+    }
+    
+    public void push(int x) {
+        dq.addFirst(x);
+        q.add(x);
+    }
+    
+    public void pop() {
+        if(dq.isEmpty()) return;
+        int num = dq.removeFirst();
+        q.remove(num);
+    }
+    
+    public int top() {
+        return dq.getFirst();
+    }
+    
+    public int getMin() {
+        return q.peek();
+    }
+}
