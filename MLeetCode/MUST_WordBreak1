@@ -1,0 +1,53 @@
+// Solution 1
+class Solution {
+    boolean flag = false;
+    HashSet<String> set;
+    Boolean[] arr;
+    public boolean wordBreak(String s, List<String> wordDict) {
+        arr = new Boolean[s.length()];
+        set = new HashSet<>(wordDict);
+        return find(0,s);
+    }
+    public boolean find(int start,String s){
+        if(start==s.length()) return true;
+        
+        if(arr[start] != null) return arr[start];
+        
+        for(int i=start;i<s.length();i++){
+            String str = s.substring(start,i+1);
+            if(set.contains(str) && find(i+1,s)){
+                return arr[start] = true;
+            }
+        }
+        return arr[start] = false;
+    }
+}
+
+// Solution 2 - Similar as above
+class Solution {
+    boolean flag = false;
+    HashSet<String> set;
+    boolean[] arr;
+    public boolean wordBreak(String s, List<String> wordDict) {
+        arr = new boolean[s.length()];
+        set = new HashSet<>(wordDict);
+        return find(0,s);
+    }
+    public boolean find(int start,String s){
+        if(start==s.length()) return true;
+        
+        if(arr[start]) return false;
+        
+        for(int i=start;i<s.length();i++){
+            String str = s.substring(start,i+1);
+            if(set.contains(str)){
+                if(find(i+1,s)){
+                    return true;
+                } else{
+                    arr[start] = true;
+                }
+            }
+        }
+        return false;
+    }
+}
