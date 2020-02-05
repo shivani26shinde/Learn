@@ -1,0 +1,36 @@
+// Better solution - PriorityQueue...Coming soon
+
+// Poor solution - Recursion
+class Solution {
+    int[] barcodes;
+    int[] ans;
+    int n;
+    boolean found = false;
+    public int[] rearrangeBarcodes(int[] barcodes) {
+        this.barcodes = barcodes;
+        n = barcodes.length;
+        rearrange(0);
+        return ans;
+    }
+    public void rearrange(int start){
+        if(found) return;
+        if(start==n){
+            for(int i=0;i<n-1;i++){
+                if(this.barcodes[i] == this.barcodes[i+1]) return;
+            }
+            found = true;
+            ans = this.barcodes.clone();
+            return;
+        }
+        for(int i=start;i<n;i++){
+            swap(start,i);
+            rearrange(start+1);
+            swap(i,start);
+        }
+    }
+    public void swap(int i, int j){
+        int temp = this.barcodes[i];
+        this.barcodes[i] = this.barcodes[j];
+        this.barcodes[j] = temp;
+    }
+}
