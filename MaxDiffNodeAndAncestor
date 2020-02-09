@@ -1,0 +1,32 @@
+class Solution {
+    int max = Integer.MIN_VALUE;
+    public int maxAncestorDiff(TreeNode root) {
+        maxDiff(root);
+        minDiff(root);
+        return max == Integer.MIN_VALUE ? 0 : max;
+    }
+    public int maxDiff(TreeNode root){
+        if(root==null) return Integer.MAX_VALUE;
+        int left = maxDiff(root.left);
+        int right = maxDiff(root.right);
+        if(left!=Integer.MAX_VALUE){
+            max = Math.max(max,Math.abs(root.val-left));
+        }
+        if(right!=Integer.MAX_VALUE){
+            max = Math.max(max,Math.abs(root.val-right));
+        }
+        return Math.min(root.val, Math.min(left,right));
+    }
+    public int minDiff(TreeNode root){
+        if(root==null) return Integer.MIN_VALUE;
+        int left = minDiff(root.left);
+        int right = minDiff(root.right);
+        if(left!=Integer.MIN_VALUE){
+            max = Math.max(max,Math.abs(root.val-left));
+        }
+        if(right!=Integer.MIN_VALUE){
+            max = Math.max(max,Math.abs(root.val-right));
+        }
+        return Math.max(root.val, Math.max(left,right));
+    }
+}
