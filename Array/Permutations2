@@ -1,0 +1,33 @@
+// Poor Solution
+class Solution {
+    List<List<Integer>> list = new ArrayList<>();
+    Set<List<Integer>> set = new HashSet<>();
+    int n;
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        n=nums.length;
+        Arrays.sort(nums);
+        permuteUnique(0,nums);
+        return list;
+    }
+    public void permuteUnique(int start, int[] nums){
+        if(start==n){
+            List<Integer> l = new ArrayList<>();
+            for(int k=0;k<n;k++){
+                l.add(nums[k]);
+            }
+            if(!set.contains(l)) list.add(l);
+            set.add(l);
+            return;
+        }
+        for(int i=start;i<n;i++){
+            swap(i,start,nums);
+            permuteUnique(start+1,nums);
+            swap(start,i,nums);
+        }
+    }
+    public void swap(int a, int b, int[] nums){
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;
+    }
+}
