@@ -1,0 +1,19 @@
+class Solution {
+    String small = null;
+    public String smallestFromLeaf(TreeNode root) {
+        if(root==null) return "";
+        smallestFromLeaf("", root);
+        return small;
+    }
+    public void smallestFromLeaf(String str, TreeNode root) {
+        if(root==null) return;
+        if(root.left==null && root.right==null){
+            str = Character.toString((char) root.val+97)+str;
+            if(small!=null) small = small.compareTo(str) < 0 ? small : str;
+            else small = str;
+            return;
+        }
+        smallestFromLeaf(Character.toString((char) root.val+97)+str, root.left);
+        smallestFromLeaf(Character.toString((char) root.val+97)+str, root.right);
+    }
+}
