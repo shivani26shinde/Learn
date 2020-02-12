@@ -1,0 +1,17 @@
+class Solution {
+    TreeNode node;
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        lowestCommonAncestorNode(root,p,q);
+        return node;
+    }
+    public boolean lowestCommonAncestorNode(TreeNode root, TreeNode p, TreeNode q){
+        if(root==null) return false;
+        boolean left = lowestCommonAncestorNode(root.left,p,q);
+        boolean right = lowestCommonAncestorNode(root.right,p,q);
+        boolean curr = root==p || root==q;
+        if(left&&curr || right&&curr || left&&right){
+            node = root;
+        }
+        return curr || left || right;
+    }
+}
