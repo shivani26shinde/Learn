@@ -1,0 +1,46 @@
+// Solution 1
+class Solution {
+    public Node connect(Node root) {
+        if(root==null) return root;
+        getNext(root);
+        return root;
+    }
+    public void getNext(Node root){
+        if(root==null) return;
+        if(root.left!=null){
+            if(root.right!=null) root.left.next = root.right;
+            else root.left.next = getNextNode(root);
+        }
+        if(root.right!=null) root.right.next = getNextNode(root);
+        getNext(root.right);
+        getNext(root.left);
+    }
+    public Node getNextNode(Node root){
+        if(root==null || root.next==null) return null;
+        if(root.next.left!=null) return root.next.left;
+        if(root.next.right!=null) return root.next.right;
+        return getNextNode(root.next);
+    }
+}
+
+// Solution 2
+class Solution {
+    public Node connect(Node root) {
+        if(root==null) return root;
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()){
+            Node prev = null;
+            int size = q.size();
+            while(size>0){
+                Node node = q.poll();
+                if(node.left!=null) q.add(node.left);
+                if(node.right!=null) q.add(node.right);
+                if(prev!=null) prev.next=node;
+                prev=node;
+                size--;
+            }
+        }
+        return root;
+    }
+}
