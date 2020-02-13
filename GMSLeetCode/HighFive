@@ -1,0 +1,41 @@
+class Solution {
+    public int[][] highFive(int[][] items) {
+        int i=0;
+        HashSet<Integer> set = new HashSet<>();
+        List<int[]> list = new ArrayList<>();
+        int[][] arr;
+        Arrays.sort(items, new Comparator<int[]>(){
+            public int compare(int[] a, int[] b){
+                if(a[0]==b[0]){
+                    return b[1]-a[1];
+                }
+                return a[0]-b[0];
+            }
+        }); 
+        while(i<items.length){
+            int num = items[i][0];
+            if(set.contains(num)){
+                i++;
+                continue;
+            }
+            int[] score = new int[2];
+            int j=i;
+            int sum=0;
+            while(j<items.length && j<i+5){
+                sum += items[j][1];
+                j++;
+            }
+            set.add(num);
+            score[0] = num;
+            score[1] = sum/5;
+            list.add(score);
+            i+=5;
+        }
+        i=0;
+        arr = new int[list.size()][2];
+        for(int[] val: list){
+            arr[i++] = val;
+        }
+        return arr;
+    }
+}
