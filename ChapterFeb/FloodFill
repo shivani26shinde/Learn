@@ -1,0 +1,27 @@
+class Solution {
+    int[][] image;
+    int newColor;
+    int currColor;
+    int m;
+    int n;
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        this.image = image;
+        this.newColor = newColor;
+        m = image.length;
+        if(m==0) return image;
+        n = image[0].length;
+        this.currColor = image[sr][sc];
+        floodFill(sr,sc);
+        return this.image;
+    }
+    public void floodFill(int i, int j) {
+        if(i<0 || j<0 || i==m || j==n 
+           || this.image[i][j]==this.newColor 
+           || this.image[i][j]!=this.currColor) return;
+        this.image[i][j] = this.newColor;
+        floodFill(i+1,j);
+        floodFill(i,j+1);
+        floodFill(i-1,j);
+        floodFill(i,j-1);
+    }
+}
