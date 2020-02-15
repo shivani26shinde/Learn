@@ -1,0 +1,36 @@
+class Solution {
+    List<String> list = new ArrayList<>();
+    int n;
+    public List<String> restoreIpAddresses(String s) {
+        n=s.length();
+        restoreIpAddresses("",0,3,s);
+        return list;
+    }
+    public void restoreIpAddresses(String str, int start, int dot, String s){
+        if(start==n) return;
+        if(dot==0){
+            String st = s.substring(start);
+            if(st.length()>3 || Integer.parseInt(st)>255 || checkLeadingZeros(st)) return;
+            str+=st;
+            list.add(str);
+            return;
+        }
+        for(int i=start;i<n;i++){
+            int index = str.lastIndexOf(".")+1;
+            String st = str.substring(index) + s.charAt(i);
+            if(st.length()>3 || Integer.parseInt(st)>255 || checkLeadingZeros(st)) return;
+            str+=s.charAt(i);
+            restoreIpAddresses(str+".", i+1, dot-1, s);
+        }
+    }
+    public boolean checkLeadingZeros(String s){
+        int i=0,count=0;
+        while(i<s.length() && s.charAt(i)=='0'){
+            count++;
+            if(count>1) return true;
+            i++;
+        }
+        if(count!=0 && i<s.length()) return true;
+        return false;
+    }
+}
