@@ -1,0 +1,35 @@
+class Solution {
+    public List<Integer> diffWaysToCompute(String input) {
+        return diffWaysToCompute(input,0,input.length()-1);
+    }
+    public List<Integer> diffWaysToCompute(String input, int start, int end){
+        List<Integer> list = new ArrayList<>();
+        int num=0;
+        for(int i=start;i<=end;i++){
+            char c = input.charAt(i);;
+            if(Character.isDigit(c)){
+                num = num*10 + (c-'0');
+            } else{
+                List<Integer> left = diffWaysToCompute(input,start,i-1);
+                List<Integer> right = diffWaysToCompute(input,i+1,end);
+                for(Integer j: left){
+                    for(Integer k: right){
+                        switch(c){
+                            case '+':
+                                list.add(j+k);
+                                break;
+                            case '-':
+                                list.add(j-k);
+                                break;
+                            case '*':
+                                list.add(j*k);
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        if(list.size()==0) list.add(num);
+        return list;
+    }
+}
