@@ -1,0 +1,55 @@
+class Solution {
+    int n;
+    Set[] arr;
+    public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
+        this.n = n;
+        Graph g = new Graph(this.n);
+        this.arr = g.arr;
+        List<List<Integer>> finalList = new ArrayList<>();
+        for(int i=0;i<connections.size();i++){
+            List<Integer> list = connections.get(i);
+            int start = list.get(0);
+            int end = list.get(1);
+            this.arr[start].add(end);
+            this.arr[end].add(start);
+        }
+        for(int i=0;i<connections.size();i++){
+            List<Integer> list = connections.get(i);
+            int start = list.get(0);
+            int end = list.get(1);
+            this.arr[start].remove(end);
+            this.arr[end].remove(start);
+            if(!bfs(0)) finalList.add(new ArrayList<>(list));
+            this.arr[start].add(end);
+            this.arr[end].add(start);
+        }
+        return finalList;
+    }
+    public boolean bfs(int start){
+        HashSet<Integer> set = new HashSet<>();
+        Queue<Integer> q = new LinkedList<>();
+        q.add(start);
+        set.add(start);
+        while(!q.isEmpty()){
+            start = q.poll();
+            Set<Integer> neighbors = arr[start];
+            for(Integer val: neighbors){
+                if(set.contains(val)) continue;
+                q.add(val);
+                set.add(val);
+            }
+        }
+        return set.size() == this.n;
+    }
+}
+class Graph{
+    int n;
+    Set[] arr;
+    public Graph(int n){
+        this.n = n;
+        this.arr = new HashSet[n];
+        for(int i=0;i<n;i++){
+            arr[i] = new HashSet<Integer>();
+        }
+    }
+}
