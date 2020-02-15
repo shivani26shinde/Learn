@@ -1,0 +1,21 @@
+class Solution {
+    String str = "~";
+    public String smallestFromLeaf(TreeNode root) {
+        smallestFromLeaf(root, new StringBuilder());
+        return str.toString();
+    }
+    public void smallestFromLeaf(TreeNode root, StringBuilder sb){
+        if(root==null) return;
+        char c = (char) (root.val+'a');
+        sb.insert(0,c);
+        if(root.left==null && root.right==null){
+            String st = sb.toString();
+            if(st.compareTo(str)<0) str = st;
+            sb.deleteCharAt(0);
+            return;
+        }
+        smallestFromLeaf(root.left, sb);
+        smallestFromLeaf(root.right, sb);
+        sb.deleteCharAt(0);
+    }
+}
