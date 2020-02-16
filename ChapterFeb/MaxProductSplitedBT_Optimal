@@ -1,0 +1,17 @@
+class Solution {
+    List<Long> list = new ArrayList<>();
+    long max=0;
+    public int maxProduct(TreeNode root) {
+        long totalSum = getSum(root);
+        for(long sum: list){
+            max = Math.max(max, sum*(totalSum-sum));
+        }
+        return (int)(max%(Math.pow(10,9)+7));
+    }
+    public long getSum(TreeNode root){
+        if(root==null) return 0;
+        long totalSum = root.val + getSum(root.left) + getSum(root.right);
+        list.add(totalSum);
+        return totalSum;
+    }
+}
