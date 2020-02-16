@@ -1,0 +1,35 @@
+class Solution {
+    TreeNode node;
+    long max=0;
+    public int maxProduct(TreeNode root) {
+        node = root;
+        postOrder(root);
+        return (int)(max%(Math.pow(10,9)+7));
+    }
+    public TreeNode postOrder(TreeNode root){
+        if(root==null) return root;
+        TreeNode left = postOrder(root.left);
+        TreeNode right = postOrder(root.right);
+        if(left!=null){
+            root.left = null;
+            long sum1 = getSum(left);
+            long sum2 = getSum(node);
+            long prod = sum1*sum2;
+            max = Math.max(max,prod);
+            root.left = left;
+        }
+        if(right!=null){
+            root.right = null;
+            long sum1 = getSum(right);
+            long sum2 = getSum(node);
+            long prod = sum1*sum2;
+            max = Math.max(max,prod);
+            root.right = right;
+        }
+        return root;
+    }
+    public long getSum(TreeNode root){
+        if(root==null) return 0;
+        return root.val+getSum(root.left)+getSum(root.right);
+    }
+}
