@@ -1,0 +1,41 @@
+// Solution 1 - Generate unique id
+class Solution {
+    HashMap<String,Integer> map = new HashMap<>();
+    HashMap<Integer,Integer> count = new HashMap<>();
+    List<TreeNode> list = new ArrayList<>();
+    int t;
+    public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
+        t=1;
+        findDuplicate(root);
+        return list;
+    }
+    public int findDuplicate(TreeNode root){
+        if(root==null) return 0;
+        String serial = root.val + "," 
+            + findDuplicate(root.left) + "," 
+            + findDuplicate(root.right);
+        int uid = map.computeIfAbsent(serial, x->t++);
+        count.put(uid, count.getOrDefault(uid,0)+1);
+        if(count.get(uid)==2) list.add(root);
+        return uid;
+    }
+}
+
+// Solution 2 - Without unique id
+class Solution {
+    HashMap<String,Integer> map = new HashMap<>();
+    List<TreeNode> list = new ArrayList<>();
+    public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
+        findDuplicate(root);
+        return list;
+    }
+    public String findDuplicate(TreeNode root){
+        if(root==null) return "#";
+        String serial = root.val + "#" 
+            + findDuplicate(root.left) + "#" 
+            + findDuplicate(root.right);
+        map.put(serial, map.getOrDefault(serial,0)+1);
+        if(map.get(serial)==2) list.add(root);
+        return serial;
+    }
+}
