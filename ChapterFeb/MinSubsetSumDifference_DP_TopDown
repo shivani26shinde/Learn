@@ -1,0 +1,25 @@
+class DP
+{
+	static int n;
+	static Integer[][] dp;
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		int[] arr = {1, 2, 3, 9};
+		n=arr.length;
+		int sum=0;
+		for(int i:arr) sum+=i;
+		dp = new Integer[n][sum+1];
+		int val = minDiff(0,0,0,arr);
+		System.out.println(val); 
+	}
+	public static int minDiff(int i, int sum1, int sum2, int[] arr){
+		if(i==n){
+			return Math.abs(sum1-sum2);
+		}
+		if(dp[i][sum1]!=null) return dp[i][sum1];
+		int diff1 = minDiff(i+1,sum1+arr[i],sum2,arr);
+		int diff2 = minDiff(i+1,sum1,sum2+arr[i],arr);
+		dp[i][sum1] = Math.min(diff1,diff2);
+		return dp[i][sum1];
+	}
+}
