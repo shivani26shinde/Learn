@@ -1,0 +1,49 @@
+class Solution {
+    int n;
+    public int largestRectangleArea(int[] heights) {
+        n=heights.length;
+        int max=0;
+        List<Node> nodeList = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        for(int i=0;i<n;i++){
+            Node node = new Node(i,heights[i]);
+            nodeList.add(node);
+        }
+        Collections.sort(nodeList, new Comparator<Node>(){
+            public int compare(Node a, Node b){
+                return a.height-b.height;
+            }
+        });
+        for(int i=0;i<n;i++) list.add(nodeList.get(i).index);
+        for(int i=0;i<n;i++){
+            int index = list.get(i);
+            int num=heights[index];
+            int left = getLeft(index-1,num,heights);
+            int right = getRight(index+1,num,heights);
+            max = Math.max(max,(right-left+1)*num);
+        }
+        return max;
+    }
+    public int getLeft(int i, int num, int[] heights){
+        while(i>=0){
+            if(heights[i]<num) break;
+            i--;
+        }
+        return i+1;
+    }
+    public int getRight(int i, int num, int[] heights){
+        while(i<n){
+            if(heights[i]<num) break;
+            i++;
+        }
+        return i-1;
+    }
+}
+class Node{
+    int index;
+    int height;
+    public Node(int index, int height){
+        this.index=index;
+        this.height=height;
+    }
+}
