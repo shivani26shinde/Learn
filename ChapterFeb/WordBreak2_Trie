@@ -1,0 +1,49 @@
+class Solution {
+    Trie root = new Trie();
+    List<String> list = new ArrayList<>();
+    Map<Integer, List<String>> map = new HashMap<>();
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        if(s.length()==0) return list;
+        createTrie(wordDict);
+        return dfs(0,s);
+    }
+    public List<String> dfs(int start, String s){
+        if(map.containsKey(start)) return map.get(start);
+        
+        List<String> result = new ArrayList<>();
+        if(start==s.length()) result.add("");
+        
+        Trie curr = root;
+        for(int i=start;i<s.length();i++){
+            int index = s.charAt(i)-'a';
+            if(curr.nodes[index]==null) break;
+            if(curr.nodes[index].isWord){
+                String st = s.substring(start,i+1);
+                List<String> list = dfs(i+1,s);
+                for(String str: list){
+                    result.add(st +  (str == "" ? "" : " ") + str);
+                }
+            }
+            curr = curr.nodes[index];
+        }
+        
+        map.put(start,result);
+        return result;
+    }
+    public void createTrie(List<String> wordDict){
+        for(String word: wordDict){
+            if(word.length()==0) continue;
+            Trie curr = root;
+            for(int i=0;i<word.length();i++){
+                int index = word.charAt(i)-'a';
+                if(curr.nodes[index]==null) curr.nodes[index] = new Trie();
+                curr = curr.nodes[index];
+            }
+            curr.isWord = true;
+        }
+    }
+}
+class Trie{
+    Trie[] nodes = new Trie[26];
+    boolean isWord;
+}
