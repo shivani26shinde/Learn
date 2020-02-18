@@ -1,0 +1,30 @@
+// Solution - Using hashmap and queue
+
+class Solution {
+    HashMap<Node, Node> map = new HashMap<>();
+    Queue<Node> q = new LinkedList<>();
+    public Node copyRandomList(Node head) {
+        if(head==null) return null;
+        map.put(head, new Node(head.val));
+        q.add(head);
+        while(!q.isEmpty()){
+            Node node = q.poll();
+            Node cloneNode = map.get(node);
+            if(node.next!=null){
+                if(!map.containsKey(node.next)) q.add(node.next);
+                Node nextNode = map.getOrDefault(node.next, new Node(node.next.val));
+                cloneNode.next = nextNode;
+                map.put(node.next, nextNode);
+            }
+            if(node.random!=null){
+                if(!map.containsKey(node.random)) q.add(node.random);
+                Node randomNode = map.getOrDefault(node.random, new Node(node.random.val));
+                cloneNode.random = randomNode;
+                map.put(node.random, randomNode);
+            }
+            
+            map.put(node,cloneNode);
+        }
+        return map.get(head);
+    }
+}
