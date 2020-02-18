@@ -1,0 +1,31 @@
+class Solution {
+    public Node copyRandomList(Node head) {
+        if(head==null) return null;
+        Node headNode = head;
+        Node node = new Node(-1);
+        Node tempClone = node;
+        while(headNode!=null){
+            tempClone.next = new Node(headNode.val);
+            tempClone = tempClone.next;
+            tempClone.random = headNode;
+            headNode = headNode.next;
+        }
+        headNode = head;
+        tempClone = node.next;
+        while(headNode!=null){
+            Node temp = headNode.next;
+            headNode.next = tempClone;
+            headNode = temp;
+            tempClone = tempClone.next;
+        }
+        headNode = head;
+        tempClone = node.next;
+        while(tempClone!=null){
+            tempClone.random = tempClone.random.random==null 
+                ? null 
+                : tempClone.random.random.next;
+            tempClone = tempClone.next;
+        }
+        return node.next;
+    }
+}
