@@ -1,0 +1,29 @@
+class Solution {
+    List<String> list = new ArrayList<>();
+    Map<Integer, List<String>> map = new HashMap<>();
+    HashSet<String> set;
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        if(s.length()==0) return list;
+        set = new HashSet<>(wordDict);
+        return dfs(0,s);
+    }
+    public List<String> dfs(int start, String s){
+        if(map.containsKey(start)) return map.get(start);
+        
+        List<String> result = new ArrayList<>();
+        if(start==s.length()) result.add("");
+        
+        for(int i=start;i<s.length();i++){
+            String st = s.substring(start,i+1);
+            if(set.contains(st)){
+                List<String> list = dfs(i+1,s);
+                for(String str: list){
+                    result.add(st +  (str == "" ? "" : " ") + str);
+                }
+            }
+        }
+        
+        map.put(start,result);
+        return result;
+    }
+}
