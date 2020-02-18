@@ -1,0 +1,42 @@
+class Solution {
+    public String minWindow(String s, String t) {
+        if(s.length()==0 || t.length()==0) return "";
+        HashMap<Character,Integer> tMap = new HashMap<>();
+        HashMap<Character,Integer> wMap = new HashMap<>();
+        List<Pair<Integer,Character>> filter = new ArrayList<>();
+        for(int i=0;i<t.length();i++){
+            char c = t.charAt(i);
+            tMap.put(c,tMap.getOrDefault(c,0)+1);
+        }
+        int required=tMap.size();
+        for(int i=0;i<s.length();i++){
+            char c = s.charAt(i);
+            if(tMap.containsKey(c)) filter.add(new Pair<>(i,c));
+        }
+        int i=0,j=0,count=0;
+        int s1=0,s2=0;
+        int min=-1;
+        while(i<filter.size()){
+            char c = filter.get(i).getValue();
+            wMap.put(c,wMap.getOrDefault(c,0)+1);
+            if(tMap.containsKey(c) 
+               && tMap.get(c).intValue()==wMap.get(c).intValue()) count++;
+            while(j<=i && count==required){
+                char ch = filter.get(j).getValue();
+                int val1 = filter.get(j).getKey();
+                int val2 = filter.get(i).getKey();
+                if(min==-1 || val2-val1+1 < min){
+                    min=val2-val1+1;
+                    s1=val1;
+                    s2=val2;
+                }
+                wMap.put(ch,wMap.get(ch)-1);
+                if(tMap.containsKey(ch) 
+                   && tMap.get(ch).intValue()>wMap.get(ch).intValue()) count--;
+                j++;
+            }
+            i++;
+        }
+        return min==-1?"":s.substring(s1,s2+1);
+    }
+}
