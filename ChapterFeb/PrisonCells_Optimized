@@ -1,0 +1,18 @@
+class Solution {
+    public int[] prisonAfterNDays(int[] cells, int N) {
+        int n=cells.length;
+        if(n<=2) return cells;
+        while(N>0){
+            int[] arr = new int[n];
+            for(int j=1;j<n-1;j++){
+                if(cells[j-1]==cells[j+1]) arr[j]=1;
+                else arr[j]=0;
+            }
+            for(int j=0;j<n;j++){
+                cells[j]=arr[j];
+            }
+            N=(N-1)%14;
+        }
+        return cells;
+    }
+}
