@@ -1,0 +1,53 @@
+class Solution {
+    Trie root = new Trie();
+    List<Integer> list = new ArrayList<>();
+    HashMap<String,Integer> map;
+    int n;
+    int len;
+    public List<Integer> findSubstring(String s, String[] words) {
+        n = words.length;
+        if(s.length()==0 || n==0) return list;
+        len = n*words[0].length();
+        createTrie(words);
+        for(int i=0;i<s.length();i++){
+            map = new HashMap<>();
+            if(dfs(i,i,s)){
+                list.add(i);
+            }
+        }
+        return list;
+    }
+    public boolean dfs(int start, int curr, String s){
+        if(curr-start==len) return true;
+        Trie node = root;
+        for(int i=curr;i<s.length();i++){
+            int index=s.charAt(i)-'a';
+            if(node.nodes[index]==null) return false;
+            if(node.nodes[index].isWord){
+                String str = s.substring(curr,i+1);
+                map.put(str,map.getOrDefault(str,0)+1);
+                if(map.get(str)>node.nodes[index].count) return false;
+                if(dfs(start,i+1,s)) return true;
+            }
+            node = node.nodes[index];
+        }
+        return false;
+    }
+    public void createTrie(String[] words){
+        for(String word: words){
+            Trie curr=root;
+            for(int i=0;i<word.length();i++){
+                int index=word.charAt(i)-'a';
+                if(curr.nodes[index]==null) curr.nodes[index]=new Trie();
+                curr=curr.nodes[index];
+            }
+            curr.isWord=true;
+            curr.count++;
+        }
+    }
+}
+class Trie{
+    Trie[] nodes = new Trie[26];
+    boolean isWord;
+    int count;
+}
