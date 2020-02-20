@@ -1,0 +1,23 @@
+class Solution {
+    public int compress(char[] chars) {
+        int i=0,j=0,n=chars.length;
+        while(j<n){
+            char c = chars[j];
+            int count=0;
+            while(j<n && chars[j]==c){
+                j++;
+                count++;
+            }
+            chars[i++] = c;
+            if(count>1){
+                List<Character> l = new ArrayList<>();
+                while(count!=0){
+                    l.add(0, (char) ((count%10) + '0'));
+                    count/=10;
+                }
+                for(char ch:l) chars[i++]=ch;
+            }
+        }
+        return i;
+    }
+}
