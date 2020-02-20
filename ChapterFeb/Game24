@@ -1,0 +1,35 @@
+class Solution {
+    public boolean judgePoint24(int[] nums) {
+        List<Double> l = new ArrayList<>();
+        for(int i:nums) l.add((double)i);
+        return judgePoint24(l);
+    }
+    public boolean judgePoint24(List<Double> list) {
+        if(list.size()==0) return false;
+        if(list.size()==1){
+            return Math.abs(list.get(0)-24)<Math.pow(10,-6);
+        }
+        for(int x=0;x<list.size();x++){
+            for(int y=0;y<list.size();y++){
+                if(x==y) continue;
+                List<Double> l = new ArrayList<>();
+                for(int m=0;m<list.size();m++){
+                    if(x!=m && y!=m) l.add(list.get(m));
+                }
+                for(int m=0;m<4;m++){
+                    if(m<2 && y>x) continue;
+                    if(m==0) l.add(list.get(x)+list.get(y));
+                    if(m==1) l.add(list.get(x)*list.get(y));
+                    if(m==2) l.add(list.get(x)-list.get(y));
+                    if(m==3){
+                        if(list.get(y)>0) l.add(list.get(x)/list.get(y));
+                        else continue;
+                    }
+                    if(judgePoint24(l)) return true;
+                    l.remove(l.size()-1);
+                }
+            }
+        }
+        return false;
+    }
+}
