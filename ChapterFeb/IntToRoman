@@ -1,0 +1,19 @@
+class Solution {
+    public String intToRoman(int num) {
+        List<Integer> numL = Arrays.asList(1,4,5,9,10,40,50,90,100,400,500,900,1000);
+        List<String> symL = Arrays.asList( "I","IV","V","IX","X","XL","L","XC","C","CD","D","CM","M");
+        int n=numL.size()-1;
+        StringBuilder sb = new StringBuilder();
+        for(int i=n;i>=0;i--){
+            int den=numL.get(i);
+            int count=num/den;
+            while(count != 0){
+                sb.append(symL.get(i));
+                count--;
+            }
+            num=num%den;
+            if(num==0) break;
+        }
+        return sb.toString();
+    }
+}
