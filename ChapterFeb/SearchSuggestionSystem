@@ -1,0 +1,41 @@
+class Solution {
+    Trie root = new Trie();
+    List<List<String>> fL = new ArrayList<>();
+    public List<List<String>> suggestedProducts(String[] products, String searchWord) {
+        Arrays.sort(products);
+        createTrie(products);
+        for(int i=0;i<searchWord.length();i++){
+            List<String> l = get(searchWord.substring(0,i+1));
+            fL.add(l);
+        }
+        return fL;
+    }
+    public List<String> get(String str){
+        Trie curr = root;
+        List<String> list = new ArrayList<>();
+        for(int i=0;i<str.length();i++){
+            int index = str.charAt(i)-'a';
+            if(curr.nodes[index]==null) return new ArrayList<>();
+            list = new ArrayList<>(curr.nodes[index].words);
+            curr = curr.nodes[index];
+        }
+        return list;
+    }
+    public void createTrie(String[] products){
+        for(String str:products){
+            Trie curr = root;
+            for(int i=0;i<str.length();i++){
+                int index = str.charAt(i)-'a';
+                if(curr.nodes[index]==null) curr.nodes[index]=new Trie();
+                int count = curr.nodes[index].count++;
+                if(count<3) curr.nodes[index].words.add(str);
+                curr = curr.nodes[index];
+            }
+        }
+    }
+}
+class Trie{
+    Trie[] nodes = new Trie[26];
+    int count=0;
+    List<String> words = new ArrayList<>(3);
+}
