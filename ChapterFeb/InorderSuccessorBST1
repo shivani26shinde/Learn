@@ -1,0 +1,33 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    HashMap<TreeNode,TreeNode> map = new HashMap<>();
+    public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        if(root==null || p==null) return null;
+        if(p.right!=null){
+            p=p.right;
+            while(p.left!=null) p=p.left;
+            return p;
+        }
+        preorder(root,null);
+        TreeNode parent = map.get(p);
+        while(parent!=null){
+            if(parent.val>p.val) return parent;
+            parent=map.get(parent);
+        }
+        return null;
+    }
+    public void preorder(TreeNode root, TreeNode parent){
+        if(root==null) return;
+        map.put(root,parent);
+        preorder(root.left,root);
+        preorder(root.right,root);
+    }
+}
