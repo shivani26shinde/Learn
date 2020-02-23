@@ -1,0 +1,20 @@
+class Solution {
+    public int minMeetingRooms(int[][] intervals) {
+        if(intervals.length==0) return 0;
+        PriorityQueue<Integer> q = new PriorityQueue<>();
+        Arrays.sort(intervals, new Comparator<int[]>(){
+            public int compare(int[] a, int[] b){
+                return a[0] - b[0];
+            }
+        });
+        q.add(intervals[0][1]);
+        int i=1;
+        while(i<intervals.length){
+            // Only have to check the peek i.e. if the 1st meeting is over
+            if(intervals[i][0]>=q.peek()) q.poll();
+            q.add(intervals[i][1]);
+            i++;
+        }
+        return q.size();
+    }
+}
