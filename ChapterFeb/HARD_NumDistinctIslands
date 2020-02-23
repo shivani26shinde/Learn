@@ -1,0 +1,32 @@
+class Solution {
+    HashSet<String> set = new HashSet<>();
+    StringBuilder sb;
+    int n;
+    int m;
+    public int numDistinctIslands(int[][] grid) {
+        n=grid.length;
+        m=grid[0].length;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                sb=new StringBuilder();
+                if(grid[i][j]==1){
+                    numDistinctIslands(i,j,0,grid);
+                    set.add(sb.toString());
+                }
+            }
+        }
+        return set.size();
+    }
+    public void numDistinctIslands(int i, int j, int k, int[][] grid){
+        if(i<0 || j<0 || i==n || j==m || grid[i][j]==0){
+            sb.append(0);
+            return;
+        }
+        grid[i][j]=0;
+        sb.append(k);
+        numDistinctIslands(i+1,j,1,grid);
+        numDistinctIslands(i,j+1,2,grid);
+        numDistinctIslands(i-1,j,3,grid);
+        numDistinctIslands(i,j-1,4,grid);
+    }
+}
