@@ -1,0 +1,79 @@
+class FileSystem {
+    Dir dir = new Dir();
+    public FileSystem() {
+    }
+    
+    public List<String> ls(String path) {
+        String[] arr = path.split("/");
+        List<String> list = new ArrayList<>();
+        Dir curr = dir;
+        for(int i=1;i<arr.length;i++){
+            String str = arr[i];
+            if(!curr.dirs.containsKey(str)){
+                if(curr.files.containsKey(str)) list.add(str);
+                return list;
+            }
+            curr = curr.dirs.get(str);
+        }
+        
+        for(String st: curr.dirs.keySet()) list.add(st);
+        for(String st: curr.files.keySet()) list.add(st);
+        Collections.sort(list);
+        return list;
+    }
+    
+    public void mkdir(String path) {
+        String[] arr = path.split("/");
+        Dir curr = dir;
+        for(int i=1;i<arr.length;i++){
+            String str = arr[i];
+            if(!curr.dirs.containsKey(str)) curr.dirs.put(str, new Dir());
+            curr = curr.dirs.get(str);
+        }
+    }
+    
+    public void addContentToFile(String filePath, String content) {
+        String[] arr = filePath.split("/");
+        Dir curr = dir;
+        String str = "";
+        int i=0;
+        if(arr.length>1) i=1;
+        
+        while(i<arr.length-1){
+            str = arr[i];
+            if(!curr.dirs.containsKey(str)) curr.dirs.put(str, new Dir());
+            curr = curr.dirs.get(str);
+            i++;
+        }
+        str = curr.files.containsKey(arr[i]) ? curr.files.get(arr[i])+content : content;
+        curr.files.put(arr[i],str);
+    }
+    
+    public String readContentFromFile(String filePath) {
+        String[] arr = filePath.split("/");
+        Dir curr = dir;
+        String str = "";
+        int i=1;
+        while(i<arr.length-1){
+            str = arr[i];
+            if(!curr.dirs.containsKey(str)) curr.dirs.put(str, new Dir());
+            curr = curr.dirs.get(str);
+            i++;
+        }
+        return curr.files.get(arr[i]);
+    }
+}
+
+/**
+ * Your FileSystem object will be instantiated and called as such:
+ * FileSystem obj = new FileSystem();
+ * List<String> param_1 = obj.ls(path);
+ * obj.mkdir(path);
+ * obj.addContentToFile(filePath,content);
+ * String param_4 = obj.readContentFromFile(filePath);
+ */
+
+class Dir{
+    Map<String, String> files = new TreeMap<>();
+    Map<String, Dir> dirs = new TreeMap<>();
+}
