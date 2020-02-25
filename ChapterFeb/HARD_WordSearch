@@ -1,0 +1,37 @@
+class Solution {
+    char[][] board;
+    String word;
+    int m;
+    int n;
+    int len;
+    public boolean exist(char[][] board, String word) {
+        this.board = board;
+        this.word = word;
+        m = board.length;
+        if(m==0) return false;
+        n = board[0].length;
+        len = word.length();
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(board[i][j]==word.charAt(0) && exist(i,j,0)) return true;
+            }
+        }
+        return false;
+    }
+    public boolean exist(int i, int j, int start){
+        if(start==len) return true;
+        if(i<0 || j<0 || i==m || j==n 
+           || this.board[i][j]!=this.word.charAt(start)) return false;
+        
+        char ch = this.board[i][j];
+        this.board[i][j]='1';
+        
+        boolean exist = exist(i+1,j,start+1) 
+            || exist(i-1,j,start+1) 
+            || exist(i,j+1,start+1) 
+            || exist(i,j-1,start+1);
+        
+        this.board[i][j] = ch;
+        return exist;
+    }
+}
