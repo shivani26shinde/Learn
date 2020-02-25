@@ -1,0 +1,46 @@
+// Store all diff chars in map (#ot -> (hot,dot,lot))
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+        for(int i=0;i<wordList.size();i++){
+            String word = wordList.get(i);
+            for(int j=0;j<word.length();j++){
+                String s = word.substring(0,j)+"#"+word.substring(j+1,word.length());
+                if(!map.containsKey(s)) map.put(s, new ArrayList<String>());
+                ArrayList<String> l = map.get(s);
+                l.add(word);
+                map.put(s, l);
+            }
+        }
+        Queue<Node> q = new LinkedList<>();
+        HashSet<String> set = new HashSet<>();
+        q.add(new Node(beginWord,1));
+        while(!q.isEmpty()){
+            Node node = q.poll();
+            String word = node.str;
+            if(!set.contains(word)){
+                set.add(word);
+                if(word.equals(endWord)) return node.count;
+                for(int j=0;j<word.length();j++){
+                    String s = word.substring(0,j)+"#"+word.substring(j+1,word.length());
+                    if(map.containsKey(s)){
+                        ArrayList<String> l = map.get(s);
+                        map.remove(s);
+                        for(int i=0;i<l.size();i++){
+                            q.add(new Node(l.get(i), node.count+1));
+                        }
+                    }
+                }
+            }            
+        }
+        return 0;
+    }
+}
+class Node {
+    String str;
+    int count;
+    public Node(String str, int count){
+        this.str=str;
+        this.count=count;
+    }
+}
