@@ -1,0 +1,30 @@
+class Solution {
+    List<String> list = new ArrayList<>();
+    Map<Integer, List<String>> map = new HashMap<>();
+    HashSet<String> set;
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        if(s.length()==0) return list;
+        set = new HashSet<>(wordDict);
+        return wordBreak(0,s);
+    }
+    public List<String> wordBreak(int start, String s){
+        if(map.containsKey(start)) return map.get(start);
+        
+        List<String> list = new ArrayList<>();
+        if(start==s.length()) list.add("");
+        StringBuilder sb = new StringBuilder();
+        
+        for(int i=start;i<s.length();i++){
+            sb.append(s.charAt(i));
+            if(set.contains(sb.toString())){
+                List<String> l = wordBreak(i+1,s);
+                for(String str: l){
+                    list.add(sb.toString()+(str=="" ? "" : " "+str));
+                }
+            }
+        }
+        
+        map.put(start, list);
+        return list;
+    }
+}
