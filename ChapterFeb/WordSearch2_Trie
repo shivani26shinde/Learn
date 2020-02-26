@@ -1,0 +1,58 @@
+class Solution {
+    Trie root = new Trie();
+    char[][] board;
+    int m;
+    int n;
+    List<String> list = new ArrayList<>();
+    public List<String> findWords(char[][] board, String[] words) {
+        this.board = board;
+        m = board.length;
+        if(m==0) return list;
+        n = board[0].length;
+        
+        createTrie(words);
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                exist(i,j,root);
+            }
+        }
+        return list;
+    }
+    public void exist(int i, int j, Trie curr){
+        //System.out.println(i+"  "+j+"  "+this.board[i][j]);
+        if(i<0 || j<0 || i==m || j==n 
+           || this.board[i][j]=='1' 
+           || curr.nodes[this.board[i][j]-'a']==null) return;
+        
+        curr = curr.nodes[this.board[i][j]-'a'];
+        if (curr.word!=null) {
+            list.add(curr.word);
+            curr.word = null;
+        }
+
+        char ch = this.board[i][j];
+        this.board[i][j] = '1';
+        
+        exist(i+1,j,curr);
+        exist(i,j+1,curr);
+        exist(i-1,j,curr);
+        exist(i,j-1,curr);
+        
+        this.board[i][j] = ch;
+    }
+    public void createTrie(String[] words){
+        for(String str: words){
+            Trie curr = root;
+            for(int i=0;i<str.length();i++){
+                int index=str.charAt(i)-'a';
+                if(curr.nodes[index]==null) curr.nodes[index] = new Trie();
+                curr = curr.nodes[index];
+            }
+            curr.word=str;
+        }
+    }
+}
+class Trie{
+    Trie[] nodes = new Trie[26];
+    String word;
+}
