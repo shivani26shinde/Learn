@@ -1,0 +1,57 @@
+class Solution {
+    int[] visited;
+    int[] parent;
+    int[] disc;
+    int[] low;
+    int time=0;
+    List<List<Integer>> con = new ArrayList<>();
+    HashMap<Integer,List<Integer>> map = new HashMap<>();
+    public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
+        visited = new int[n];
+        parent = new int[n];
+        disc = new int[n];
+        low = new int[n];
+        fillMap(connections);
+        dfs(0);
+        return con;
+    }
+    public void dfs(int u){
+        visited[u]=1;
+        disc[u]=low[u]=time++;
+        List<Integer> nodes = map.get(u);
+        for(int i=0;i<nodes.size();i++){
+            int v = nodes.get(i);
+            if(visited[v]==0){
+                parent[v]=u;
+                dfs(v);
+                low[u] = Math.min(low[u],low[v]);
+                if(disc[u]<low[v]){
+                    List<Integer> l=new ArrayList<>();
+                    l.add(u);
+                    l.add(v);
+                    con.add(l);
+                }
+            } 
+            else if(v!=parent[u]){
+                low[u] = Math.min(low[u],disc[v]);
+            }
+        }
+    }
+    public void fillMap(List<List<Integer>> connections){
+        for(int i=0;i<connections.size();i++){
+            List<Integer> l = connections.get(i);
+            int u=l.get(0);
+            int v=l.get(1);
+            
+            if(!map.containsKey(u)) map.put(u, new ArrayList<>());
+            List<Integer> uList = map.get(u);
+            uList.add(v);
+            map.put(u,uList);
+            
+            if(!map.containsKey(v)) map.put(v, new ArrayList<>());
+            List<Integer> vList = map.get(v);
+            vList.add(u);
+            map.put(v,vList);
+        }
+    }
+}
