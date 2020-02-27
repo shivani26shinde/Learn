@@ -1,0 +1,28 @@
+class Solution {
+    HashMap<Character, String> map = new HashMap<>();
+    public boolean wordPatternMatch(String pattern, String str) {
+        if(str.length()<pattern.length()) return false;
+        return patternMatch(str,pattern);
+    }
+    public boolean patternMatch(String s, String p){
+        if(s.length()==0) return true;
+        if(p.length()==0) return false;
+        
+        char ch = p.charAt(0);
+        
+        for(int i=1;i<=s.length()-p.length()+1;i++){
+            String st = s.substring(0,i);
+            if(map.containsValue(st)){
+                if(map.getOrDefault(ch,"").equals(st)){
+                    if(patternMatch(s.substring(i),p.substring(1))) return true;
+                }
+            } else if(!map.containsKey(ch)){
+                map.put(ch,st);
+                if(patternMatch(s.substring(i),p.substring(1))) return true;
+                map.remove(ch);
+            } 
+        }
+        
+        return false;
+    }
+}
