@@ -1,0 +1,33 @@
+class Solution {
+    public int expressiveWords(String S, String[] words) {
+        int count=0;
+        for(String str:words){
+            int i=0;
+            int j=0;
+            boolean isWord=true;
+            while(i<S.length() && j<str.length()){
+                if(S.charAt(i)!=str.charAt(j)){
+                    isWord=false;
+                    break;
+                }
+                char ch = S.charAt(i);
+                int count1=0,count2=0;
+                while(i<S.length() && S.charAt(i)==ch){
+                    i++;
+                    count1++;
+                }
+                while(j<str.length() && str.charAt(j)==ch){
+                    j++;
+                    count2++;
+                }
+                if(count1!=count2 && count1 < 3 || count1<count2){
+                    isWord=false;
+                    break;
+                }
+            }
+            if(i<S.length() || j<str.length()) isWord=false;
+            if(isWord) count++;
+        }
+        return count;
+    }
+}
