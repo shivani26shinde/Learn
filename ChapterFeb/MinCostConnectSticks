@@ -1,0 +1,13 @@
+class Solution {
+    public int connectSticks(int[] sticks) {
+        PriorityQueue<Integer> q = new PriorityQueue<>();
+        for(int i:sticks) q.add(i);
+        int sum=0;
+        while(q.size()>1){
+            int num = q.poll()+q.poll();
+            sum+=num;
+            q.add(num);
+        }
+        return sum;
+    }
+}
