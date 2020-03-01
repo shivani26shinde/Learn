@@ -1,10 +1,33 @@
 /**
  * // This is the Master's API interface.
  * // You should not implement it, or speculate about its implementation
- * interface Master {
- *     public int guess(String word) {}
- * }
- */
+// Solution 1
+class Solution {
+    public void findSecretWord(String[] wordlist, Master master) {
+        ArrayList<String> l = new ArrayList<>(Arrays.asList(wordlist));
+        for(int i=0;i<10;i++){
+            String word = l.get(0);
+            int match = master.guess(word);
+            if(match == word.length()) return;
+            Iterator<String> iter = l.listIterator();
+            while(iter.hasNext()){
+                String curr = iter.next();
+                if(getCount(word,curr)!=match) iter.remove();
+            }
+            Collections.sort(l);
+        }
+        return;
+    }
+    public int getCount(String a, String b) {
+        int count=0;
+        for(int i=0;i<a.length();i++){
+            if(a.charAt(i)==b.charAt(i)) count++;
+        }
+        return count;
+    }
+}
+
+// Modification of above
 class Solution {
     public void findSecretWord(String[] wordlist, Master master) {
         List<String> list = new LinkedList<>();
