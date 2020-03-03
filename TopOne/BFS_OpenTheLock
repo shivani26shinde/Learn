@@ -1,0 +1,45 @@
+class Solution {
+    HashSet<String> set;
+    public int openLock(String[] deadends, String target) {
+        set = new HashSet<>(Arrays.asList(deadends));
+        if(set.contains("0000")) return -1;
+        int ans=0;
+        Queue<String> q = new LinkedList<>();
+        q.add("0000");
+        while(!q.isEmpty()){
+            int size=q.size();
+            for(int i=0;i<size;i++){
+                String str=q.poll();
+                if(str.equals(target)) return ans;
+                List<String> l = getN(str);
+                for(String s: l){
+                    if(!set.contains(s)){
+                        q.add(s);
+                        set.add(s);
+                    }
+                }
+            }
+            ans++;
+        }
+        return -1;
+    }
+    public List<String> getN(String str){
+        List<String> l = new ArrayList<>();
+        char[] arr = str.toCharArray();
+        String st;
+        for(int i=0;i<4;i++){
+            char c = arr[i];
+            if(c=='9') arr[i]='0';
+            else arr[i]=(char)(c+1);
+            st = new String(arr);
+            if(!set.contains(st)) l.add(st);
+            
+            if(c=='0') arr[i]='9';
+            else arr[i]=(char)(c-1);
+            st = new String(arr);
+            if(!set.contains(st)) l.add(st);
+            arr[i]=c;
+        }
+        return l;
+    }
+}
