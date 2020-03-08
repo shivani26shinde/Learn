@@ -1,0 +1,14 @@
+class Solution {
+    public String generateTheString(int n) {
+        if(n==0) return "";
+        if(n==1) return "a";
+        if(n==2) return "ab";
+        StringBuilder sb = new StringBuilder();
+        if(n%2==0){
+            for(int i=1;i<n;i++) sb.append('b');
+            return "a"+sb.toString();
+        } 
+        for(int i=2;i<n;i++) sb.append('c');
+        return "ab"+sb.toString();
+    }
+}
