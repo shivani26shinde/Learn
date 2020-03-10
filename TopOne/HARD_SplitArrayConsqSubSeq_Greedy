@@ -1,0 +1,30 @@
+class Solution {
+    public boolean isPossible(int[] nums) {
+        Count start = new Count();
+        Count end = new Count();
+        for(int num:nums) start.add(num,1);
+        for(int num:nums){
+            if(start.get(num)==0) continue;
+            else if(end.get(num)>0){
+                end.add(num,-1);
+                end.add(num+1,1);
+            }
+            else if(start.get(num+1)>0 && start.get(num+2)>0){
+                start.add(num+1,-1);
+                start.add(num+2,-1);
+                end.add(num+3,1);
+            } 
+            else return false;
+            start.add(num,-1);
+        }
+        return true;
+    }
+}
+class Count extends HashMap<Integer, Integer>{
+    public void add(int a, int b){
+        put(a, get(a)+b);
+    }
+    public int get(int a){
+        return containsKey(a) ? super.get(a) : 0;
+    }
+}
