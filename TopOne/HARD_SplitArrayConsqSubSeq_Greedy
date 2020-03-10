@@ -2,7 +2,8 @@ class Solution {
     public boolean isPossible(int[] nums) {
         Count start = new Count();
         Count end = new Count();
-        for(int num:nums) start.add(num,1);
+        for(int num:nums) 
+            start.add(num,1);
         for(int num:nums){
             if(start.get(num)==0) continue;
             else if(end.get(num)>0){
