@@ -1,0 +1,23 @@
+class Solution {
+    public String getHint(String secret, String guess) {
+        int count1=0;
+        int count2=0;
+        char[] s = secret.toCharArray();
+        char[] g = guess.toCharArray();
+        int[] num = new int[10];
+        for(int i=0;i<s.length;i++){
+            if(s[i]==g[i]) count1++;
+        }
+        for(int i=0;i<s.length;i++){
+            num[Character.getNumericValue(s[i])]++;
+        }
+        for(int i=0;i<g.length;i++){
+            int val = Character.getNumericValue(g[i]);
+            if(num[val]>0){
+                count2++;
+                num[val]--;
+            }
+        }
+        return count1+"A"+(count2-count1)+"B";
+    }
+}
