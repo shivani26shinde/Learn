@@ -1,0 +1,23 @@
+class Solution {
+    List<List<Integer>> ans = new ArrayList<>();
+    Map<Integer, List<Integer>> map = new TreeMap<>();
+    int min=Integer.MAX_VALUE;
+    int max=Integer.MIN_VALUE;
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        traverse(root,0);
+        for(int i=min;i<=max;i++){
+            if(map.containsKey(i)) ans.add(new ArrayList<>(map.get(i)));
+        }
+        return ans;
+    }
+    public void traverse(TreeNode root, int val){
+        if(root==null) return;
+        List<Integer> l = map.getOrDefault(val, new ArrayList<>());
+        l.add(root.val);
+        map.put(val, l);
+        min = Math.min(val, min);
+        max = Math.max(val, max);
+        traverse(root.left, val-1);
+        traverse(root.right, val+1);
+    }
+}
